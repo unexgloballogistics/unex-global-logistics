@@ -132,7 +132,20 @@ margin-top:50px;
 }
 </style>
 </head>
+<script>
+function trackShipment(){
 
+var number=document.getElementById("trackingNumber").value;
+
+if(number==""){
+alert("Please enter your tracking number.");
+return;
+}
+
+window.location.href="tracking.html?tracking="+number;
+
+}
+</script>
 <body>
 
 <header>
