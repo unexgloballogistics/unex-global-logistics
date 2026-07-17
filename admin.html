@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UNEX Admin Dashboard</title>
+
+<style>
+body{
+font-family:Arial,sans-serif;
+background:#f4f7fb;
+margin:0;
+padding:20px;
+}
+
+.container{
+max-width:700px;
+margin:auto;
+background:white;
+padding:25px;
+border-radius:10px;
+box-shadow:0 5px 15px rgba(0,0,0,.1);
+}
+
+h1{
+text-align:center;
+color:#0A3D91;
+}
+
+input,select{
+width:100%;
+padding:12px;
+margin:10px 0;
+font-size:16px;
+border:1px solid #ccc;
+border-radius:6px;
+box-sizing:border-box;
+}
+
+button{
+background:#FF7A00;
+color:white;
+border:none;
+padding:14px;
+width:100%;
+font-size:18px;
+border-radius:8px;
+cursor:pointer;
+}
+
+#output{
+margin-top:20px;
+padding:15px;
+background:#eef;
+border-radius:8px;
+white-space:pre-wrap;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>UNEX Admin Dashboard</h1>
+
+<input id="tracking" placeholder="Tracking Number">
+
+<input id="origin" placeholder="Origin">
+
+<input id="destination" placeholder="Destination">
+
+<select id="status">
+<option>Shipment Created</option>
+<option>In Transit</option>
+<option>Out for Delivery</option>
+<option>Delivered</option>
+<option>Held at Customs</option>
+</select>
+
+<input id="delivery" placeholder="Estimated Delivery">
+
+<button onclick="saveShipment()">Save Shipment</button>
+
+<div id="output"></div>
+
+</div>
+
+<script>
+function saveShipment(){
+
+const shipment={
+tracking:document.getElementById("tracking").value,
+origin:document.getElementById("origin").value,
+destination:document.getElementById("destination").value,
+status:document.getElementById("status").value,
+delivery:document.getElementById("delivery").value
+};
+
+document.getElementById("output").textContent=
+JSON.stringify(shipment,null,2);
+
+}
+</script>
+
+</body>
+</html>
