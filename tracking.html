@@ -129,9 +129,42 @@ Back
 
 <script>
 
-const params=new URLSearchParams(window.location.search);
+const params = new URLSearchParams(window.location.search);
+const number = params.get("tracking");
 
-document.getElementById("trackingNo").innerHTML=params.get("tracking");
+document.getElementById("trackingNo").innerHTML = number;
+
+let status = "In Transit";
+let origin = "New York, USA";
+let destination = "London, United Kingdom";
+let delivery = "3 Business Days";
+
+if(number=="UNX10001"){
+status="Delivered";
+origin="Los Angeles, USA";
+destination="Toronto, Canada";
+delivery="Delivered";
+}
+
+if(number=="UNX20002"){
+status="Out for Delivery";
+origin="Berlin, Germany";
+destination="Paris, France";
+delivery="Today";
+}
+
+if(number=="UNX30003"){
+status="Held at Customs";
+origin="Shanghai, China";
+destination="Dubai, UAE";
+delivery="Awaiting Clearance";
+}
+
+document.querySelector(".status").innerHTML="Status: "+status;
+
+document.querySelectorAll(".info")[1].innerHTML="Origin: "+origin;
+document.querySelectorAll(".info")[2].innerHTML="Destination: "+destination;
+document.querySelectorAll(".info")[3].innerHTML="Estimated Delivery: "+delivery;
 
 </script>
 
