@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shipment Tracking - UNEX Global Logistics</title>
+
+<style>
+body{
+font-family:Arial,sans-serif;
+background:#f4f7fb;
+margin:0;
+padding:40px 20px;
+}
+
+.container{
+max-width:700px;
+margin:auto;
+background:#fff;
+padding:30px;
+border-radius:10px;
+box-shadow:0 5px 15px rgba(0,0,0,.1);
+}
+
+h1{
+color:#0A3D91;
+text-align:center;
+}
+
+.status{
+background:#eaf7ea;
+padding:15px;
+border-left:5px solid green;
+margin:20px 0;
+font-size:20px;
+font-weight:bold;
+}
+
+.info{
+margin:12px 0;
+font-size:18px;
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+margin-top:20px;
+}
+
+th,td{
+border:1px solid #ddd;
+padding:12px;
+text-align:left;
+}
+
+th{
+background:#0A3D91;
+color:white;
+}
+
+button{
+margin-top:25px;
+background:#FF7A00;
+color:white;
+padding:14px 30px;
+border:none;
+border-radius:8px;
+font-size:18px;
+cursor:pointer;
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>Shipment Tracking</h1>
+
+<div class="info">
+Tracking Number:
+<strong id="trackingNo"></strong>
+</div>
+
+<div class="status">
+Status: In Transit
+</div>
+
+<div class="info">
+Origin: New York, USA
+</div>
+
+<div class="info">
+Destination: London, United Kingdom
+</div>
+
+<div class="info">
+Estimated Delivery: 3 Business Days
+</div>
+
+<table>
+
+<tr>
+<th>Date</th>
+<th>Location</th>
+<th>Update</th>
+</tr>
+
+<tr>
+<td>Today</td>
+<td>New York</td>
+<td>Shipment Received</td>
+</tr>
+
+<tr>
+<td>Today</td>
+<td>Distribution Center</td>
+<td>In Transit</td>
+</tr>
+
+</table>
+
+<button onclick="history.back()">
+Back
+</button>
+
+</div>
+
+<script>
+
+const params=new URLSearchParams(window.location.search);
+
+document.getElementById("trackingNo").innerHTML=params.get("tracking");
+
+</script>
+
+</body>
+</html>
