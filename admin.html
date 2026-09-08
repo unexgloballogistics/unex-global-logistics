@@ -100,14 +100,14 @@ const supabaseClient = window.supabase.createClient(
 async function saveShipment() {
 
   const shipment = {
-    tracking: document.getElementById("tracking").value.trim(),
-    origin: document.getElementById("origin").value.trim(),
-    destination: document.getElementById("destination").value.trim(),
-    status: document.getElementById("status").value,
+    Tracking: document.getElementById("tracking").value.trim(),
+    Origin: document.getElementById("origin").value.trim(),
+    Destination: document.getElementById("destination").value.trim(),
+    Status: document.getElementById("status").value,
     delivery: document.getElementById("delivery").value.trim()
-  };
-
-  if (!shipment.tracking) {
+};
+ 
+   if (!shipment.tracking) {
     alert("Please enter a tracking number.");
     return;
   }
