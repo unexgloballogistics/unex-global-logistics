@@ -86,19 +86,47 @@ white-space:pre-wrap;
 
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <script>
-function saveShipment(){
+const SUPABASE_URL = "https://kwmverimbcosdshjvshc.supabase.co";
+const SUPABASE_PUBLISHABLE_KEY = sb_publishable_Y_9BOh5Hmb-Zf-rrflPKzw_WV9_Rd5A
 
-const shipment={
-tracking:document.getElementById("tracking").value,
-origin:document.getElementById("origin").value,
-destination:document.getElementById("destination").value,
-status:document.getElementById("status").value,
-delivery:document.getElementById("delivery").value
-};
 
-document.getElementById("output").textContent=
-JSON.stringify(shipment,null,2);
+const supabaseClient = window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_PUBLISHABLE_KEY
+);
+
+async function saveShipment() {
+
+  const shipment = {
+    tracking: document.getElementById("tracking").value.trim(),
+    origin: document.getElementById("origin").value.trim(),
+    destination: document.getElementById("destination").value.trim(),
+    status: document.getElementById("status").value,
+    delivery: document.getElementById("delivery").value.trim()
+  };
+
+  if (!shipment.tracking) {
+    alert("Please enter a tracking number.");
+    return;
+  }
+
+  const { data, error } = await supabaseClient
+    .from("shipments")
+    .insert([shipment])
+    .select();
+
+  if (error) {
+    console.error(error);
+    alert("Could not save shipment: " + error.message);
+    return;
+  }
+
+  document.getElementById("output").textContent =
+    "Shipment saved successfully!\\n\\n" +
+    JSON.stringify(data[0], null, 2);
 
 }
 </script>
