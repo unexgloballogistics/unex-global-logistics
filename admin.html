@@ -63,7 +63,14 @@ white-space:pre-wrap;
 <div class="container">
 
 <h1>UNEX Admin Dashboard</h1>
+<div id="loginBox">
+  <input id="adminEmail" type="email" placeholder="Admin Email">
+  <input id="adminPassword" type="password" placeholder="Admin Password">
+  <button onclick="loginAdmin()">Login</button>
+  <p id="loginMessage"></p>
+</div>
 
+<div id="adminArea" style="display:none;">
 <input id="tracking" placeholder="Tracking Number">
 
 <input id="origin" placeholder="Origin">
@@ -85,9 +92,9 @@ white-space:pre-wrap;
 <div id="output"></div>
 
 </div>
+</div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
 <script>
 const SUPABASE_URL = "https://kwmverimbcosdshjvshc.supabase.co";
 const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_Y_9BOh5Hmb-Zf-rrflPKzw_WV9_Rd5A";
