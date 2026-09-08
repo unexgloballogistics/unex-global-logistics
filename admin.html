@@ -95,6 +95,7 @@ white-space:pre-wrap;
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <script>
 const SUPABASE_URL = "https://kwmverimbcosdshjvshc.supabase.co";
 const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_Y_9BOh5Hmb-Zf-rrflPKzw_WV9_Rd5A";
@@ -104,6 +105,25 @@ const supabaseClient = window.supabase.createClient(
   SUPABASE_PUBLISHABLE_KEY
 );
 
+async function loginAdmin() {
+  const email = document.getElementById("adminEmail").value.trim();
+  const password = document.getElementById("adminPassword").value;
+
+  const { error } = await supabaseClient.auth.signInWithPassword({
+    email: email,
+    password: password
+  });
+
+  if (error) {
+    document.getElementById("loginMessage").textContent =
+      "Login failed: " + error.message;
+    return;
+  }
+
+  document.getElementById("loginBox").style.display = "none";
+  document.getElementById("adminArea").style.display = "block";
+}
+
 async function saveShipment() {
 
   const shipment = {
@@ -112,8 +132,9 @@ async function saveShipment() {
     Destination: document.getElementById("destination").value.trim(),
     Status: document.getElementById("status").value,
     delivery: document.getElementById("delivery").value.trim()
-};
-   if (!shipment.Tracking) {
+  };
+
+  if (!shipment.Tracking) {
     alert("Please enter a tracking number.");
     return;
   }
@@ -124,15 +145,13 @@ async function saveShipment() {
     .select();
 
   if (error) {
-    console.error(error);
     alert("Could not save shipment: " + error.message);
     return;
   }
 
   document.getElementById("output").textContent =
-    "Shipment saved successfully!\\n\\n" +
+    "Shipment saved successfully!\n\n" +
     JSON.stringify(data[0], null, 2);
-
 }
 </script>
 
