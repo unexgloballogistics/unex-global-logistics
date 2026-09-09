@@ -140,10 +140,9 @@ async function saveShipment() {
   }
 
   const { data, error } = await supabaseClient
-    .from("shipments")
-    .insert([shipment])
-    .select();
-
+  .from("shipments")
+  .upsert([shipment], { onConflict: "Tracking" })
+  .select();
   if (error) {
     alert("Could not save shipment: " + error.message);
     return;
