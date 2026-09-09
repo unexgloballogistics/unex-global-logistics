@@ -127,43 +127,73 @@ Back
 
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <script>
+const SUPABASE_URL = "https://kwmverimbcosdshjvshc.supabase.co";
+const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_Y_9BOh5Hmb-Zf-rrflPKzw_WV9_Rd5A";
 
-const params = new URLSearchParams(window.location.search);
-const number = (params.get("tracking") || "").trim().toUpperCase();
+const supabaseClient = window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_PUBLISHABLE_KEY
+);
 
-document.getElementById("trackingNo").textContent = number;
+async function loadShipment() {
 
-let status = "In Transit";
-let origin = "New York, USA";
-let destination = "London, United Kingdom";
-let delivery = "3 Business Days";
+  const params = new URLSearchParams(window.location.search);
+  const number = (params.get("tracking") || "").trim();
 
-if (number === "UNX10001") {
-    status = "Delivered";
-    origin = "Los Angeles, USA";
-    destination = "Toronto, Canada";
-    delivery = "Delivered";
-} else if (number === "UNX20002") {
-    status = "Out for Delivery";
-    origin = "Berlin, Germany";
-    destination = "Paris, France";
-    delivery = "Today";
-} else if (number === "UNX30003") {
-    status = "Held at Customs";
-    origin = "Shanghai, China";
-    destination = "Dubai, UAE";
-    delivery = "Awaiting Clearance";
+  document.getElementById("trackingNo").textContent = number;
+
+  if (!number) {
+    document.querySelector(".status").textContent =
+      "Status: Please enter a tracking number.";
+    return;
+  }
+
+  const { data, error } = await supabaseClient
+    .from("shipments")
+    .select("Tracking, Origin, Destination, Status, delivery")
+    .eq("Tracking", number)
+    .maybeSingle();
+
+  if (error) {
+    console.error(error);
+    document.querySelector(".status").textContent =
+      "Status: Unable to retrieve shipment.";
+    return;
+  }
+
+  if (!data) {
+    document.querySelector(".status").textContent =
+      "Status: Shipment not found.";
+
+    document.querySelectorAll(".info")[1].textContent =
+      "Origin: —";
+
+    document.querySelectorAll(".info")[2].textContent =
+      "Destination: —";
+
+    document.querySelectorAll(".info")[3].textContent =
+      "Estimated Delivery: —";
+
+    return;
+  }
+
+  document.querySelector(".status").textContent =
+    "Status: " + data.Status;
+
+  document.querySelectorAll(".info")[1].textContent =
+    "Origin: " + data.Origin;
+
+  document.querySelectorAll(".info")[2].textContent =
+    "Destination: " + data.Destination;
+
+  document.querySelectorAll(".info")[3].textContent =
+    "Estimated Delivery: " + data.delivery;
 }
 
-document.querySelector(".status").textContent = "Status: " + status;
-
-const info = document.querySelectorAll(".info");
-info[1].textContent = "Origin: " + origin;
-info[2].textContent = "Destination: " + destination;
-info[3].textContent = "Estimated Delivery: " + delivery;
-
+loadShipment();
 </script>
-
 </body>
 </html>
