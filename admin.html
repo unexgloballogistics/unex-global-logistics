@@ -153,6 +153,50 @@ async function saveShipment() {
     JSON.stringify(data[0], null, 2);
 }
 </script>
+<h2 style="margin-top:40px;">Existing Shipments</h2>
 
+<div id="shipmentList">
+  Loading shipments...
+</div>
+
+<script>
+async function loadShipments() {
+
+  const { data, error } = await supabaseClient
+    .from("shipments")
+    .select("id, Tracking, Origin, Destination, Status, delivery")
+    .order("id", { ascending: false });
+
+  if (error) {
+    document.getElementById("shipmentList").textContent =
+      "Could not load shipments: " + error.message;
+    return;
+  }
+
+  const list = document.getElementById("shipmentList");
+
+  if (!data || data.length === 0) {
+    list.textContent = "No shipments yet.";
+    return;
+  }
+
+  list.innerHTML = data.map(shipment => `
+    <div style="
+      border:1px solid #ddd;
+      padding:15px;
+      margin:10px 0;
+      border-radius:10px;
+    ">
+      <strong>Tracking:</strong> ${shipment.Tracking}<br>
+      <strong>Origin:</strong> ${shipment.Origin}<br>
+      <strong>Destination:</strong> ${shipment.Destination}<br>
+      <strong>Status:</strong> ${shipment.Status}<br>
+      <strong>Delivery:</strong> ${shipment.delivery}
+    </div>
+  `).join("");
+}
+
+loadShipments();
+</script>
 </body>
 </html>
