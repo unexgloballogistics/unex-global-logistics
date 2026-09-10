@@ -193,8 +193,7 @@ async function loadShipments() {
       <strong>Origin:</strong> ${shipment.Origin}<br>
       <strong>Destination:</strong> ${shipment.Destination}<br>
       <strong>Status:</strong> ${shipment.Status}<br>
-      <strong>Delivery:</strong> ${shipment.delivery}
-      <br><br>
+      <strong>Delivery:</strong> ${shipment.delivery}<br><br>
 <button onclick="editShipment('${shipment.id}')">Edit</button>
 <button onclick="deleteShipment('${shipment.id}')">Delete</button>
     </div>
@@ -203,7 +202,26 @@ async function loadShipments() {
 
   loadShipments();
   async function editShipment(id) {
+async function deleteShipment(id) {
 
+  if (!confirm("Are you sure you want to delete this shipment?")) {
+    return;
+  }
+
+  const { error } = await supabaseClient
+    .from("shipments")
+    .delete()
+    .eq("id", id);
+
+  if (error) {
+    alert("Could not delete shipment: " + error.message);
+    return;
+  }
+
+  alert("Shipment deleted successfully!");
+
+  loadShipments();
+}
   const tracking = prompt("Tracking number:");
   if (!tracking) return;
 
