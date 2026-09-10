@@ -194,11 +194,51 @@ async function loadShipments() {
       <strong>Destination:</strong> ${shipment.Destination}<br>
       <strong>Status:</strong> ${shipment.Status}<br>
       <strong>Delivery:</strong> ${shipment.delivery}
+      <br><br>
+<button onclick="editShipment('${shipment.id}')">Edit</button>
+<button onclick="deleteShipment('${shipment.id}')">Delete</button>
     </div>
   `).join("");
 }
 
   loadShipments();
+  async function editShipment(id) {
+
+  const tracking = prompt("Tracking number:");
+  if (!tracking) return;
+
+  const origin = prompt("Origin:");
+  if (origin === null) return;
+
+  const destination = prompt("Destination:");
+  if (destination === null) return;
+
+  const status = prompt("Status:");
+  if (status === null) return;
+
+  const delivery = prompt("Estimated delivery:");
+  if (delivery === null) return;
+
+  const { error } = await supabaseClient
+    .from("shipments")
+    .update({
+      Tracking: tracking,
+      Origin: origin,
+      Destination: destination,
+      Status: status,
+      delivery: delivery
+    })
+    .eq("id", id);
+
+  if (error) {
+    alert("Could not update shipment: " + error.message);
+    return;
+  }
+
+  alert("Shipment updated successfully!");
+
+  loadShipments();
+}
 </script>
 
 </div>
