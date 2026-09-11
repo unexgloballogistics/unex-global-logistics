@@ -201,28 +201,9 @@ async function loadShipments() {
 }
 
   loadShipments();
-  async function editShipment(id) {
-async function deleteShipment(id) {
 
-  if (!confirm("Are you sure you want to delete this shipment?")) {
-    return;
-  }
+async function editShipment(id) {
 
-  const { error } = await supabaseClient
-    .from("shipments")
-    .delete()
-    .eq("id", id);
-
-  if (error) {
-  alert("DELETE ERROR: " + error.message);
-  console.log(error);
-  return;
-}
-
-  alert("Shipment deleted successfully!");
-
-  loadShipments();
-}
   const tracking = prompt("Tracking number:");
   if (!tracking) return;
 
@@ -255,6 +236,27 @@ async function deleteShipment(id) {
   }
 
   alert("Shipment updated successfully!");
+
+  loadShipments();
+}
+
+async function deleteShipment(id) {
+
+  if (!confirm("Are you sure you want to delete this shipment?")) {
+    return;
+  }
+
+  const { error } = await supabaseClient
+    .from("shipments")
+    .delete()
+    .eq("id", id);
+
+  if (error) {
+    alert("Could not delete shipment: " + error.message);
+    return;
+  }
+
+  alert("Shipment deleted successfully!");
 
   loadShipments();
 }
