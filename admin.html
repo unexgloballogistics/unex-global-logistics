@@ -214,9 +214,10 @@ async function deleteShipment(id) {
     .eq("id", id);
 
   if (error) {
-    alert("Could not delete shipment: " + error.message);
-    return;
-  }
+  alert("DELETE ERROR: " + error.message);
+  console.log(error);
+  return;
+}
 
   alert("Shipment deleted successfully!");
 
