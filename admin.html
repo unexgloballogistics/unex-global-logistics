@@ -204,40 +204,27 @@ async function loadShipments() {
 
 async function editShipment(id) {
 
-  const tracking = prompt("Tracking number:");
-  if (!tracking) return;
-
-  const origin = prompt("Origin:");
-  if (origin === null) return;
-
-  const destination = prompt("Destination:");
-  if (destination === null) return;
-
-  const status = prompt("Status:");
-  if (status === null) return;
-
-  const delivery = prompt("Estimated delivery:");
-  if (delivery === null) return;
-
-  const { error } = await supabaseClient
+  const { data, error } = await supabaseClient
     .from("shipments")
-    .update({
-      Tracking: tracking,
-      Origin: origin,
-      Destination: destination,
-      Status: status,
-      delivery: delivery
-    })
-    .eq("id", id);
+    .select("Tracking, Origin, Destination, Status, delivery")
+    .eq("id", id)
+    .single();
 
   if (error) {
-    alert("Could not update shipment: " + error.message);
+    alert("Could not load shipment: " + error.message);
     return;
   }
 
-  alert("Shipment updated successfully!");
+  document.getElementById("tracking").value = data.Tracking;
+  document.getElementById("origin").value = data.Origin;
+  document.getElementById("destination").value = data.Destination;
+  document.getElementById("status").value = data.Status;
+  document.getElementById("delivery").value = data.delivery;
 
-  loadShipments();
+  window.scrollTo({ top: 0, behavior: "smooth" });
+
+  document.getElementById("output").textContent =
+    "Editing shipment " + data.Tracking;
 }
 
 async function deleteShipment(id) {
