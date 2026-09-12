@@ -1,272 +1,662 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>UNEX Admin Dashboard</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<style>
-body{
-font-family:Arial,sans-serif;
-background:#f4f7fb;
-margin:0;
-padding:20px;
-}
+  <title>UNEX Global Logistics - Admin</title>
 
-.container{
-max-width:700px;
-margin:auto;
-background:white;
-padding:25px;
-border-radius:10px;
-box-shadow:0 5px 15px rgba(0,0,0,.1);
-}
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-h1{
-text-align:center;
-color:#0A3D91;
-}
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f7fb;
+      margin: 0;
+      padding: 20px;
+    }
 
-input,select{
-width:100%;
-padding:12px;
-margin:10px 0;
-font-size:16px;
-border:1px solid #ccc;
-border-radius:6px;
-box-sizing:border-box;
-}
+    .container {
+      max-width: 700px;
+      margin: auto;
+    }
 
-button{
-background:#FF7A00;
-color:white;
-border:none;
-padding:14px;
-width:100%;
-font-size:18px;
-border-radius:8px;
-cursor:pointer;
-}
+    .card {
+      background: white;
+      padding: 25px;
+      border-radius: 12px;
+      margin-bottom: 20px;
+      box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+    }
 
-#output{
-margin-top:20px;
-padding:15px;
-background:#eef;
-border-radius:8px;
-white-space:pre-wrap;
-}
-</style>
+    h1, h2 {
+      margin-top: 0;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 12px;
+      margin: 8px 0 15px;
+      box-sizing: border-box;
+      border: 1px solid #ccc;
+      border-radius: 7px;
+      font-size: 16px;
+    }
+
+    button {
+      padding: 12px 18px;
+      border: none;
+      border-radius: 7px;
+      cursor: pointer;
+      font-size: 16px;
+      margin-right: 8px;
+      margin-top: 5px;
+    }
+
+    .primary {
+      background: #0b63ce;
+      color: white;
+      width: 100%;
+    }
+
+    .edit {
+      background: #f0ad00;
+      color: white;
+    }
+
+    .delete {
+      background: #d93025;
+      color: white;
+    }
+
+    .logout {
+      background: #555;
+      color: white;
+      width: 100%;
+      margin-top: 15px;
+    }
+
+    .shipment {
+      border: 1px solid #ddd;
+      padding: 15px;
+      margin: 12px 0;
+      border-radius: 10px;
+      background: #fafafa;
+    }
+
+    #output {
+      margin-top: 15px;
+      font-weight: bold;
+    }
+
+    .hidden {
+      display: none;
+    }
+  </style>
 </head>
 
 <body>
 
 <div class="container">
 
-<h1>UNEX Admin Dashboard</h1>
-<div id="loginBox">
-  <input id="adminEmail" type="email" placeholder="Admin Email">
-  <input id="adminPassword" type="password" placeholder="Admin Password">
-  <button onclick="loginAdmin()">Login</button>
-  <p id="loginMessage"></p>
-</div>
+  <!-- LOGIN -->
+  <div id="loginCard" class="card">
 
-<div id="adminArea" style="display:none;">
-<input id="tracking" placeholder="Tracking Number">
+    <h1>UNEX Admin</h1>
 
-<input id="origin" placeholder="Origin">
+    <p>Login to manage shipments.</p>
 
-<input id="destination" placeholder="Destination">
+    <label>Email</label>
+    <input
+      type="email"
+      id="email"
+      placeholder="Admin email"
+    >
 
-<select id="status">
-<option>Shipment Created</option>
-<option>In Transit</option>
-<option>Out for Delivery</option>
-<option>Delivered</option>
-<option>Held at Customs</option>
-</select>
+    <label>Password</label>
+    <input
+      type="password"
+      id="password"
+      placeholder="Password"
+    >
 
-<input id="delivery" placeholder="Estimated Delivery">
+    <button class="primary" onclick="loginAdmin()">
+      Login
+    </button>
 
-<button onclick="saveShipment()">Save Shipment</button>
-<input type="hidden" id="editingId">
-<div id="output"></div>
+    <div id="loginMessage"></div>
 
-</div>
-</div>
+  </div>
 
-<div id="shipmentsSection" style="display:none;">
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script>
-const SUPABASE_URL = "https://kwmverimbcosdshjvshc.supabase.co";
-const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_Y_9BOh5Hmb-Zf-rrflPKzw_WV9_Rd5A";
+  <!-- ADMIN AREA -->
+  <div id="adminArea" class="hidden">
 
-const supabaseClient = window.supabase.createClient(
-  SUPABASE_URL,
-  SUPABASE_PUBLISHABLE_KEY
-);
+    <!-- SHIPMENT FORM -->
+    <div class="card">
 
-async function loginAdmin() {
-  const email = document.getElementById("adminEmail").value.trim();
-  const password = document.getElementById("adminPassword").value;
+      <h2>Manage Shipment</h2>
 
-  const { error } = await supabaseClient.auth.signInWithPassword({
-    email: email,
-    password: password
-  });
+      <input type="hidden" id="editingId">
 
-  if (error) {
-    document.getElementById("loginMessage").textContent =
-      "Login failed: " + error.message;
-    return;
-  }
+      <label>Tracking Number</label>
+      <input
+        type="text"
+        id="tracking"
+        placeholder="Example: 223344"
+      >
 
-  document.getElementById("loginBox").style.display = "none";
-  document.getElementById("adminArea").style.display = "block";
-  document.getElementById("shipmentsSection").style.display = "block";
-loadShipments();
+      <label>Origin</label>
+      <input
+        type="text"
+        id="origin"
+        placeholder="Example: New York"
+      >
 
-async function saveShipment() {
+      <label>Destination</label>
+      <input
+        type="text"
+        id="destination"
+        placeholder="Example: Germany"
+      >
 
-  const editingId = document.getElementById("editingId").value;
+      <label>Status</label>
+      <select id="status">
+        <option value="Shipment Created">Shipment Created</option>
+        <option value="In Transit">In Transit</option>
+        <option value="Arrived at Facility">Arrived at Facility</option>
+        <option value="Held at Customs">Held at Customs</option>
+        <option value="Out for Delivery">Out for Delivery</option>
+        <option value="Delivered">Delivered</option>
+      </select>
 
-  const shipment = {
-    Tracking: document.getElementById("tracking").value.trim(),
-    Origin: document.getElementById("origin").value.trim(),
-    Destination: document.getElementById("destination").value.trim(),
-    Status: document.getElementById("status").value,
-    delivery: document.getElementById("delivery").value.trim()
-  };
+      <label>Estimated Delivery</label>
+      <input
+        type="text"
+        id="delivery"
+        placeholder="Example: 03/04/2026"
+      >
 
-  if (!shipment.Tracking) {
-    alert("Please enter a tracking number.");
-    return;
-  }
+      <button class="primary" onclick="saveShipment()">
+        Save Shipment
+      </button>
 
-  let result;
+      <button class="logout" onclick="logoutAdmin()">
+        Logout
+      </button>
 
-  if (editingId) {
+      <div id="output"></div>
 
-    result = await supabaseClient
-      .from("shipments")
-      .update(shipment)
-      .eq("id", editingId)
-      .select();
-
-  } else {
-
-    result = await supabaseClient
-      .from("shipments")
-      .upsert([shipment], { onConflict: "Tracking" })
-      .select();
-  }
-
-  if (result.error) {
-    alert("Could not save shipment: " + result.error.message);
-    return;
-  }
-
-  document.getElementById("output").textContent =
-    editingId
-      ? "Shipment updated successfully!"
-      : "Shipment saved successfully!";
-
-  document.getElementById("editingId").value = "";
-
-  loadShipments();
-}
-</script>
-
-<script>
-async function loadShipments() {
-
-  const { data, error } = await supabaseClient
-    .from("shipments")
-    .select("id, Tracking, Origin, Destination, Status, delivery")
-    .order("id", { ascending: false });
-
-  if (error) {
-    document.getElementById("shipmentList").textContent =
-      "Could not load shipments: " + error.message;
-    return;
-  }
-
-  const list = document.getElementById("shipmentList");
-
-  if (!data || data.length === 0) {
-    list.textContent = "No shipments yet.";
-    return;
-  }
-
-  list.innerHTML = data.map(shipment => `
-    <div style="
-      border:1px solid #ddd;
-      padding:15px;
-      margin:10px 0;
-      border-radius:10px;
-    ">
-      <strong>Tracking:</strong> ${shipment.Tracking}<br>
-      <strong>Origin:</strong> ${shipment.Origin}<br>
-      <strong>Destination:</strong> ${shipment.Destination}<br>
-      <strong>Status:</strong> ${shipment.Status}<br>
-      <strong>Delivery:</strong> ${shipment.delivery}<br><br>
-<button onclick="editShipment('${shipment.id}')">Edit</button>
-<button onclick="deleteShipment('${shipment.id}')">Delete</button>
     </div>
-  `).join("");
-}
 
-</script>
 
-<script>
-async function editShipment(id) {
+    <!-- EXISTING SHIPMENTS -->
+    <div class="card">
 
-  const { data, error } = await supabaseClient
-    .from("shipments")
-    .select("Tracking, Origin, Destination, Status, delivery")
-    .eq("id", id)
-    .single();
+      <h2>Existing Shipments</h2>
 
-  if (error) {
-    alert("Could not load shipment: " + error.message);
-    return;
-  }
+      <div id="shipmentList">
+        Loading shipments...
+      </div>
 
-  document.getElementById("tracking").value = data.Tracking;
-  document.getElementById("origin").value = data.Origin;
-  document.getElementById("destination").value = data.Destination;
-  document.getElementById("status").value = data.Status;
-  document.getElementById("delivery").value = data.delivery;
+    </div>
 
-  window.scrollTo({ top: 0, behavior: "smooth" });
-
-  document.getElementById("output").textContent =
-    "Editing shipment " + data.Tracking;
-}
-
-async function deleteShipment(id) {
-
-  if (!confirm("Are you sure you want to delete this shipment?")) {
-    return;
-  }
-
-  const { error } = await supabaseClient
-    .from("shipments")
-    .delete()
-    .eq("id", id);
-
-  if (error) {
-    alert("Could not delete shipment: " + error.message);
-    return;
-  }
-
-  alert("Shipment deleted successfully!");
-
-  loadShipments();
-}
-</script>
+  </div>
 
 </div>
+
+
+<script>
+
+  /* =========================
+     SUPABASE
+  ========================= */
+
+  const SUPABASE_URL =
+    "https://kwmverimbcosdshjvshc.supabase.co";
+
+  const SUPABASE_PUBLISHABLE_KEY =
+    "sb_publishable_Y_9BOh5Hmb-Zf-rrflPKzw_WV9_Rd5A";
+
+  const supabaseClient =
+    window.supabase.createClient(
+      SUPABASE_URL,
+      SUPABASE_PUBLISHABLE_KEY
+    );
+
+
+  /* =========================
+     LOGIN
+  ========================= */
+
+  async function loginAdmin() {
+
+    const email =
+      document.getElementById("email").value.trim();
+
+    const password =
+      document.getElementById("password").value;
+
+    const message =
+      document.getElementById("loginMessage");
+
+    if (!email || !password) {
+
+      message.textContent =
+        "Please enter your email and password.";
+
+      return;
+    }
+
+    message.textContent = "Logging in...";
+
+    const { data, error } =
+      await supabaseClient.auth.signInWithPassword({
+        email: email,
+        password: password
+      });
+
+    if (error) {
+
+      message.textContent =
+        "Login failed: " + error.message;
+
+      return;
+    }
+
+    if (!data.session) {
+
+      message.textContent =
+        "Login failed. No session created.";
+
+      return;
+    }
+
+    message.textContent = "";
+
+    document.getElementById("loginCard")
+      .classList.add("hidden");
+
+    document.getElementById("adminArea")
+      .classList.remove("hidden");
+
+    await loadShipments();
+  }
+
+
+  /* =========================
+     LOGOUT
+  ========================= */
+
+  async function logoutAdmin() {
+
+    await supabaseClient.auth.signOut();
+
+    document.getElementById("adminArea")
+      .classList.add("hidden");
+
+    document.getElementById("loginCard")
+      .classList.remove("hidden");
+
+    document.getElementById("shipmentList").innerHTML =
+      "";
+
+    document.getElementById("output").textContent =
+      "";
+
+    document.getElementById("email").value = "";
+    document.getElementById("password").value = "";
+  }
+
+
+  /* =========================
+     SAVE SHIPMENT
+  ========================= */
+
+  async function saveShipment() {
+
+    const editingId =
+      document.getElementById("editingId").value;
+
+    const tracking =
+      document.getElementById("tracking").value.trim();
+
+    const origin =
+      document.getElementById("origin").value.trim();
+
+    const destination =
+      document.getElementById("destination").value.trim();
+
+    const status =
+      document.getElementById("status").value;
+
+    const delivery =
+      document.getElementById("delivery").value.trim();
+
+
+    if (!tracking) {
+
+      alert("Please enter a tracking number.");
+
+      return;
+    }
+
+
+    if (!origin || !destination) {
+
+      alert("Please enter the origin and destination.");
+
+      return;
+    }
+
+
+    const shipment = {
+
+      Tracking: tracking,
+      Origin: origin,
+      Destination: destination,
+      Status: status,
+      delivery: delivery
+
+    };
+
+
+    let result;
+
+
+    /* EDIT EXISTING SHIPMENT */
+
+    if (editingId) {
+
+      result =
+        await supabaseClient
+          .from("shipments")
+          .update(shipment)
+          .eq("id", editingId)
+          .select();
+
+
+    }
+
+    /* CREATE / UPDATE BY TRACKING NUMBER */
+
+    else {
+
+      result =
+        await supabaseClient
+          .from("shipments")
+          .upsert(
+            [shipment],
+            {
+              onConflict: "Tracking"
+            }
+          )
+          .select();
+
+    }
+
+
+    if (result.error) {
+
+      alert(
+        "Could not save shipment: " +
+        result.error.message
+      );
+
+      return;
+    }
+
+
+    document.getElementById("output")
+      .textContent =
+      editingId
+        ? "Shipment updated successfully!"
+        : "Shipment saved successfully!";
+
+
+    document.getElementById("editingId").value =
+      "";
+
+
+    await loadShipments();
+  }
+
+
+  /* =========================
+     LOAD SHIPMENTS
+  ========================= */
+
+  async function loadShipments() {
+
+    const list =
+      document.getElementById("shipmentList");
+
+    list.textContent =
+      "Loading shipments...";
+
+
+    const { data, error } =
+      await supabaseClient
+        .from("shipments")
+        .select(
+          "id, Tracking, Origin, Destination, Status, delivery"
+        )
+        .order(
+          "id",
+          { ascending: false }
+        );
+
+
+    if (error) {
+
+      list.textContent =
+        "Could not load shipments: " +
+        error.message;
+
+      return;
+    }
+
+
+    if (!data || data.length === 0) {
+
+      list.textContent =
+        "No shipments yet.";
+
+      return;
+    }
+
+
+    list.innerHTML =
+      data.map(shipment => `
+
+        <div class="shipment">
+
+          <strong>Tracking:</strong>
+          ${escapeHtml(shipment.Tracking)}
+          <br>
+
+          <strong>Origin:</strong>
+          ${escapeHtml(shipment.Origin)}
+          <br>
+
+          <strong>Destination:</strong>
+          ${escapeHtml(shipment.Destination)}
+          <br>
+
+          <strong>Status:</strong>
+          ${escapeHtml(shipment.Status)}
+          <br>
+
+          <strong>Delivery:</strong>
+          ${escapeHtml(shipment.delivery)}
+          <br><br>
+
+          <button
+            class="edit"
+            onclick="editShipment('${shipment.id}')">
+            Edit
+          </button>
+
+          <button
+            class="delete"
+            onclick="deleteShipment('${shipment.id}')">
+            Delete
+          </button>
+
+        </div>
+
+      `).join("");
+  }
+
+
+  /* =========================
+     EDIT SHIPMENT
+  ========================= */
+
+  async function editShipment(id) {
+
+    const { data, error } =
+      await supabaseClient
+        .from("shipments")
+        .select(
+          "id, Tracking, Origin, Destination, Status, delivery"
+        )
+        .eq("id", id)
+        .single();
+
+
+    if (error) {
+
+      alert(
+        "Could not load shipment: " +
+        error.message
+      );
+
+      return;
+    }
+
+
+    document.getElementById("editingId").value =
+      data.id;
+
+    document.getElementById("tracking").value =
+      data.Tracking || "";
+
+    document.getElementById("origin").value =
+      data.Origin || "";
+
+    document.getElementById("destination").value =
+      data.Destination || "";
+
+    document.getElementById("status").value =
+      data.Status || "Shipment Created";
+
+    document.getElementById("delivery").value =
+      data.delivery || "";
+
+
+    document.getElementById("output")
+      .textContent =
+      "Editing shipment " +
+      data.Tracking;
+
+
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    });
+  }
+
+
+  /* =========================
+     DELETE SHIPMENT
+  ========================= */
+
+  async function deleteShipment(id) {
+
+    const confirmed =
+      confirm(
+        "Are you sure you want to delete this shipment?"
+      );
+
+
+    if (!confirmed) {
+      return;
+    }
+
+
+    const { error } =
+      await supabaseClient
+        .from("shipments")
+        .delete()
+        .eq("id", id);
+
+
+    if (error) {
+
+      alert(
+        "Could not delete shipment: " +
+        error.message
+      );
+
+      return;
+    }
+
+
+    document.getElementById("output")
+      .textContent =
+      "Shipment deleted successfully!";
+
+
+    await loadShipments();
+  }
+
+
+  /* =========================
+     SECURITY / DISPLAY
+  ========================= */
+
+  function escapeHtml(value) {
+
+    if (value === null || value === undefined) {
+      return "";
+    }
+
+    return String(value)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#039;");
+  }
+
+
+  /* =========================
+     CHECK EXISTING SESSION
+  ========================= */
+
+  async function checkSession() {
+
+    const { data } =
+      await supabaseClient.auth.getSession();
+
+
+    if (data.session) {
+
+      document.getElementById("loginCard")
+        .classList.add("hidden");
+
+      document.getElementById("adminArea")
+        .classList.remove("hidden");
+
+      await loadShipments();
+    }
+  }
+
+
+  checkSession();
+
+</script>
 
 </body>
 </html>
