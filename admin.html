@@ -127,6 +127,8 @@ async function loginAdmin() {
 
 async function saveShipment() {
 
+  const editingId = document.getElementById("editingId").value;
+
   const shipment = {
     Tracking: document.getElementById("tracking").value.trim(),
     Origin: document.getElementById("origin").value.trim(),
@@ -140,25 +142,38 @@ async function saveShipment() {
     return;
   }
 
-  const { data, error } = await supabaseClient
-  .from("shipments")
-  .upsert([shipment], { onConflict: "Tracking" })
-  .select();
-  if (error) {
-    alert("Could not save shipment: " + error.message);
+  let result;
+
+  if (editingId) {
+
+    result = await supabaseClient
+      .from("shipments")
+      .update(shipment)
+      .eq("id", editingId)
+      .select();
+
+  } else {
+
+    result = await supabaseClient
+      .from("shipments")
+      .upsert([shipment], { onConflict: "Tracking" })
+      .select();
+  }
+
+  if (result.error) {
+    alert("Could not save shipment: " + result.error.message);
     return;
   }
 
   document.getElementById("output").textContent =
-    "Shipment saved successfully!\n\n" +
-    JSON.stringify(data[0], null, 2);
-}
-</script>
-<div id="shipmentsSection" style="display:none;">
-<h2 style="margin-top:40px;">Existing Shipments</h2>
+    editingId
+      ? "Shipment updated successfully!"
+      : "Shipment saved successfully!";
 
-<div id="shipmentList">
-  Loading shipments...
+  document.getElementById("editingId").value = "";
+
+  loadShipments();
+}
 </div>
 
 <script>
