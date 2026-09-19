@@ -4,60 +4,106 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Shipment Tracking - UNEX Global Logistics</title>
-
 <style>
 body{
 font-family:Arial,sans-serif;
 background:#f4f7fb;
 margin:0;
-padding:40px 20px;
+padding:30px 15px;
+color:#222;
 }
-
 .container{
 max-width:700px;
 margin:auto;
 background:#fff;
 padding:30px;
-border-radius:10px;
-box-shadow:0 5px 15px rgba(0,0,0,.1);
+border-radius:14px;
+box-shadow:0 5px 18px rgba(0,0,0,.1);
 }
-
 h1{
 color:#0A3D91;
 text-align:center;
+margin-bottom:25px;
 }
-
+.tracking-number{
+text-align:center;
+font-size:18px;
+margin-bottom:20px;
+}
 .status{
-background:#eaf7ea;
-padding:15px;
-border-left:5px solid green;
+padding:16px;
+border-radius:8px;
 margin:20px 0;
 font-size:20px;
 font-weight:bold;
+background:#eaf7ea;
+border-left:5px solid #22a447;
 }
-
 .info{
-margin:12px 0;
-font-size:18px;
+margin:14px 0;
+font-size:17px;
 }
-
-table{
-width:100%;
-border-collapse:collapse;
-margin-top:20px;
+.info strong{
+color:#0A3D91;
 }
-
-th,td{
-border:1px solid #ddd;
-padding:12px;
-text-align:left;
+/* TIMELINE */
+.timeline{
+margin-top:30px;
+position:relative;
 }
-
-th{
-background:#0A3D91;
-color:white;
+.timeline h2{
+color:#0A3D91;
+margin-bottom:25px;
 }
-
+.timeline-item{
+position:relative;
+padding:0 0 28px 45px;
+border-left:3px solid #d6dce5;
+margin-left:12px;
+}
+.timeline-item:last-child{
+border-left:3px solid transparent;
+}
+.timeline-dot{
+position:absolute;
+left:-11px;
+top:0;
+width:19px;
+height:19px;
+background:#c8ced8;
+border-radius:50%;
+border:3px solid white;
+box-shadow:0 0 0 2px #c8ced8;
+}
+.timeline-item.active .timeline-dot{
+background:#22a447;
+box-shadow:0 0 0 2px #22a447;
+}
+.timeline-item.active{
+border-left-color:#22a447;
+}
+.timeline-date{
+font-size:13px;
+color:#777;
+margin-bottom:5px;
+}
+.timeline-location{
+font-weight:bold;
+font-size:17px;
+color:#0A3D91;
+}
+.timeline-update{
+margin-top:4px;
+font-size:15px;
+}
+.not-found{
+background:#fff0f0;
+border-left:5px solid #d93025;
+padding:15px;
+border-radius:8px;
+font-weight:bold;
+color:#b00000;
+}
 button{
 margin-top:25px;
 background:#FF7A00;
@@ -67,132 +113,204 @@ border:none;
 border-radius:8px;
 font-size:18px;
 cursor:pointer;
+width:100%;
+}
+button:hover{
+opacity:.9;
+}
+.loading{
+text-align:center;
+color:#666;
+padding:20px;
 }
 </style>
-
 </head>
-
 <body>
-
 <div class="container">
-
 <h1>Shipment Tracking</h1>
-
-<div class="info">
+<div class="tracking-number">
 Tracking Number:
 <strong id="trackingNo"></strong>
 </div>
-
-<div class="status">
-Status: In Transit
+<div id="shipmentContent">
+<div class="loading">
+Loading shipment information...
 </div>
-
-<div class="info">
-Origin: New York, USA
 </div>
-
-<div class="info">
-Destination: London, United Kingdom
-</div>
-
-<div class="info">
-Estimated Delivery: 3 Business Days
-</div>
-
-<table>
-
-<tr>
-<th>Date</th>
-<th>Location</th>
-<th>Update</th>
-</tr>
-
-<tr>
-<td>Today</td>
-<td>New York</td>
-<td>Shipment Received</td>
-</tr>
-
-<tr>
-<td>Today</td>
-<td>Distribution Center</td>
-<td>In Transit</td>
-</tr>
-
-</table>
-
 <button onclick="history.back()">
 Back
 </button>
-
 </div>
-
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
 <script>
-const SUPABASE_URL = "https://kwmverimbcosdshjvshc.supabase.co";
-const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_Y_9BOh5Hmb-Zf-rrflPKzw_WV9_Rd5A";
-
-const supabaseClient = window.supabase.createClient(
-  SUPABASE_URL,
-  SUPABASE_PUBLISHABLE_KEY
+const SUPABASE_URL =
+"https://kwmverimbcosdshjvshc.supabase.co";
+const SUPABASE_PUBLISHABLE_KEY =
+"sb_publishable_Y_9BOh5Hmb-Zf-rrflPKzw_WV9_Rd5A";
+const supabaseClient =
+window.supabase.createClient(
+SUPABASE_URL,
+SUPABASE_PUBLISHABLE_KEY
 );
-
-async function loadShipment() {
-
-  const params = new URLSearchParams(window.location.search);
-  const number = (params.get("tracking") || "").trim();
-
-  document.getElementById("trackingNo").textContent = number;
-
-  if (!number) {
-    document.querySelector(".status").textContent =
-      "Status: Please enter a tracking number.";
-    return;
-  }
-
-  const { data, error } = await supabaseClient
-    .from("shipments")
-    .select("Tracking, Origin, Destination, Status, delivery")
-    .eq("Tracking", number)
-    .maybeSingle();
-
-  if (error) {
-    console.error(error);
-    document.querySelector(".status").textContent =
-      "Status: Unable to retrieve shipment.";
-    return;
-  }
-
-  if (!data) {
-    document.querySelector(".status").textContent =
-      "Status: Shipment not found.";
-
-    document.querySelectorAll(".info")[1].textContent =
-      "Origin: —";
-
-    document.querySelectorAll(".info")[2].textContent =
-      "Destination: —";
-
-    document.querySelectorAll(".info")[3].textContent =
-      "Estimated Delivery: —";
-
-    return;
-  }
-
-  document.querySelector(".status").textContent =
-    "Status: " + data.Status;
-
-  document.querySelectorAll(".info")[1].textContent =
-    "Origin: " + data.Origin;
-
-  document.querySelectorAll(".info")[2].textContent =
-    "Destination: " + data.Destination;
-
-  document.querySelectorAll(".info")[3].textContent =
-    "Estimated Delivery: " + data.delivery;
+async function loadShipment(){
+const params =
+new URLSearchParams(window.location.search);
+const number =
+(params.get("tracking") || "").trim();
+document.getElementById("trackingNo")
+.textContent = number;
+if(!number){
+document.getElementById("shipmentContent")
+.innerHTML = `
+<div class="not-found">
+Please enter a tracking number.
+</div>
+`;
+return;
 }
-
+const { data, error } =
+await supabaseClient
+.from("shipments")
+.select(
+"Tracking, Origin, Destination, Status, delivery"
+)
+.eq("Tracking", number)
+.maybeSingle();
+if(error){
+console.error(error);
+document.getElementById("shipmentContent")
+.innerHTML = `
+<div class="not-found">
+Unable to retrieve shipment information.
+</div>
+`;
+return;
+}
+if(!data){
+document.getElementById("shipmentContent")
+.innerHTML = `
+<div class="not-found">
+Shipment not found.
+</div>
+`;
+return;
+}
+/* SHIPMENT INFORMATION */
+let status =
+data.Status || "Shipment Created";
+let statusLower =
+status.toLowerCase();
+let createdActive = true;
+let transitActive =
+statusLower.includes("transit") ||
+statusLower.includes("facility") ||
+statusLower.includes("customs") ||
+statusLower.includes("delivery") ||
+statusLower.includes("delivered");
+let customsActive =
+statusLower.includes("customs") ||
+statusLower.includes("delivery") ||
+statusLower.includes("delivered");
+let deliveryActive =
+statusLower.includes("delivery") ||
+statusLower.includes("delivered");
+let deliveredActive =
+statusLower.includes("delivered");
+document.getElementById("shipmentContent")
+.innerHTML = `
+<div class="status">
+Status: ${escapeHtml(status)}
+</div>
+<div class="info">
+<strong>Origin:</strong>
+${escapeHtml(data.Origin || "—")}
+</div>
+<div class="info">
+<strong>Destination:</strong>
+${escapeHtml(data.Destination || "—")}
+</div>
+<div class="info">
+<strong>Estimated Delivery:</strong>
+${escapeHtml(data.delivery || "—")}
+</div>
+<div class="timeline">
+<h2>Shipment Progress</h2>
+<div class="timeline-item active">
+<div class="timeline-dot"></div>
+<div class="timeline-date">
+Shipment Created
+</div>
+<div class="timeline-location">
+UNEX Global Logistics
+</div>
+<div class="timeline-update">
+Shipment has been registered in our system.
+</div>
+</div>
+<div class="timeline-item ${transitActive ? "active" : ""}">
+<div class="timeline-dot"></div>
+<div class="timeline-date">
+In Transit
+</div>
+<div class="timeline-location">
+Shipment Network
+</div>
+<div class="timeline-update">
+Shipment is moving through the logistics network.
+</div>
+</div>
+<div class="timeline-item ${customsActive ? "active" : ""}">
+<div class="timeline-dot"></div>
+<div class="timeline-date">
+Customs
+</div>
+<div class="timeline-location">
+Customs Processing
+</div>
+<div class="timeline-update">
+Shipment may be undergoing customs clearance.
+</div>
+</div>
+<div class="timeline-item ${deliveryActive ? "active" : ""}">
+<div class="timeline-dot"></div>
+<div class="timeline-date">
+Out for Delivery
+</div>
+<div class="timeline-location">
+Destination Area
+</div>
+<div class="timeline-update">
+Shipment is being prepared for final delivery.
+</div>
+</div>
+<div class="timeline-item ${deliveredActive ? "active" : ""}">
+<div class="timeline-dot"></div>
+<div class="timeline-date">
+Delivered
+</div>
+<div class="timeline-location">
+Destination
+</div>
+<div class="timeline-update">
+Shipment has been delivered successfully.
+</div>
+</div>
+</div>
+`;
+}
+/* SECURITY */
+function escapeHtml(value){
+if(value === null ||
+value === undefined){
+return "";
+}
+return String(value)
+.replace(/&/g,"&amp;")
+.replace(/</g,"&lt;")
+.replace(/>/g,"&gt;")
+.replace(/"/g,"&quot;")
+.replace(/'/g,"&#039;");
+}
 loadShipment();
 </script>
 </body>
