@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Shipment Tracking - UNEX Global Logistics</title>
+
 <style>
 body{
 font-family:Arial,sans-serif;
@@ -12,6 +13,7 @@ margin:0;
 padding:30px 15px;
 color:#222;
 }
+
 .container{
 max-width:700px;
 margin:auto;
@@ -20,16 +22,19 @@ padding:30px;
 border-radius:14px;
 box-shadow:0 5px 18px rgba(0,0,0,.1);
 }
+
 h1{
 color:#0A3D91;
 text-align:center;
 margin-bottom:25px;
 }
+
 .tracking-number{
 text-align:center;
 font-size:18px;
 margin-bottom:20px;
 }
+
 .status{
 padding:16px;
 border-radius:8px;
@@ -39,31 +44,39 @@ font-weight:bold;
 background:#eaf7ea;
 border-left:5px solid #22a447;
 }
+
 .info{
 margin:14px 0;
 font-size:17px;
 }
+
 .info strong{
 color:#0A3D91;
 }
+
 /* TIMELINE */
+
 .timeline{
 margin-top:30px;
 position:relative;
 }
+
 .timeline h2{
 color:#0A3D91;
 margin-bottom:25px;
 }
+
 .timeline-item{
 position:relative;
 padding:0 0 28px 45px;
 border-left:3px solid #d6dce5;
 margin-left:12px;
 }
+
 .timeline-item:last-child{
 border-left:3px solid transparent;
 }
+
 .timeline-dot{
 position:absolute;
 left:-11px;
@@ -75,27 +88,33 @@ border-radius:50%;
 border:3px solid white;
 box-shadow:0 0 0 2px #c8ced8;
 }
+
 .timeline-item.active .timeline-dot{
 background:#22a447;
 box-shadow:0 0 0 2px #22a447;
 }
+
 .timeline-item.active{
 border-left-color:#22a447;
 }
+
 .timeline-date{
 font-size:13px;
 color:#777;
 margin-bottom:5px;
 }
+
 .timeline-location{
 font-weight:bold;
 font-size:17px;
 color:#0A3D91;
 }
+
 .timeline-update{
 margin-top:4px;
 font-size:15px;
 }
+
 .not-found{
 background:#fff0f0;
 border-left:5px solid #d93025;
@@ -104,6 +123,7 @@ border-radius:8px;
 font-weight:bold;
 color:#b00000;
 }
+
 button{
 margin-top:25px;
 background:#FF7A00;
@@ -115,9 +135,11 @@ font-size:18px;
 cursor:pointer;
 width:100%;
 }
+
 button:hover{
 opacity:.9;
 }
+
 .loading{
 text-align:center;
 color:#666;
@@ -125,49 +147,78 @@ padding:20px;
 }
 </style>
 </head>
+
 <body>
+
 <div class="container">
+
 <h1>Shipment Tracking</h1>
+
 <div class="tracking-number">
 Tracking Number:
 <strong id="trackingNo"></strong>
 </div>
+
 <div id="shipmentContent">
+
 <div class="loading">
 Loading shipment information...
 </div>
+
 </div>
+
 <button onclick="history.back()">
 Back
 </button>
+
 </div>
+
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <script>
+
 const SUPABASE_URL =
 "https://kwmverimbcosdshjvshc.supabase.co";
+
 const SUPABASE_PUBLISHABLE_KEY =
 "sb_publishable_Y_9BOh5Hmb-Zf-rrflPKzw_WV9_Rd5A";
+
 const supabaseClient =
 window.supabase.createClient(
 SUPABASE_URL,
 SUPABASE_PUBLISHABLE_KEY
 );
+
+
 async function loadShipment(){
+
 const params =
 new URLSearchParams(window.location.search);
+
 const number =
 (params.get("tracking") || "").trim();
+
 document.getElementById("trackingNo")
 .textContent = number;
+
+
 if(!number){
+
 document.getElementById("shipmentContent")
 .innerHTML = `
 <div class="not-found">
 Please enter a tracking number.
 </div>
 `;
+
 return;
+
 }
+
+
+/* GET SHIPMENT */
+
 const { data, error } =
 await supabaseClient
 .from("shipments")
@@ -176,142 +227,197 @@ await supabaseClient
 )
 .eq("Tracking", number)
 .maybeSingle();
+
+
 if(error){
+
 console.error(error);
+
 document.getElementById("shipmentContent")
 .innerHTML = `
 <div class="not-found">
 Unable to retrieve shipment information.
 </div>
 `;
+
 return;
+
 }
+
+
 if(!data){
+
 document.getElementById("shipmentContent")
 .innerHTML = `
 <div class="not-found">
 Shipment not found.
 </div>
 `;
+
 return;
+
 }
+
+
+/* GET REAL SHIPMENT HISTORY */
+
+const { data: history, error: historyError } =
+await supabaseClient
+.from("shipment_history")
+.select(
+"tracking, status, note, created_at"
+)
+.eq("tracking", number)
+.order(
+"created_at",
+{ ascending: true }
+);
+
+
+if(historyError){
+
+console.error(historyError);
+
+}
+
+
 /* SHIPMENT INFORMATION */
-let status =
+
+const status =
 data.Status || "Shipment Created";
-let statusLower =
-status.toLowerCase();
-let createdActive = true;
-let transitActive =
-statusLower.includes("transit") ||
-statusLower.includes("facility") ||
-statusLower.includes("customs") ||
-statusLower.includes("delivery") ||
-statusLower.includes("delivered");
-let customsActive =
-statusLower.includes("customs") ||
-statusLower.includes("delivery") ||
-statusLower.includes("delivered");
-let deliveryActive =
-statusLower.includes("delivery") ||
-statusLower.includes("delivered");
-let deliveredActive =
-statusLower.includes("delivered");
+
+
+let timelineHTML = "";
+
+
+/* CREATE TIMELINE FROM HISTORY */
+
+if(history && history.length > 0){
+
+timelineHTML = history.map(item => {
+
+const date =
+item.created_at
+? new Date(item.created_at).toLocaleString()
+: "";
+
+return `
+
+<div class="timeline-item active">
+
+<div class="timeline-dot"></div>
+
+<div class="timeline-date">
+${escapeHtml(date)}
+</div>
+
+<div class="timeline-location">
+${escapeHtml(item.status || "Shipment Update")}
+</div>
+
+<div class="timeline-update">
+${escapeHtml(item.note || "Shipment status updated.")}
+</div>
+
+</div>
+
+`;
+
+}).join("");
+
+}
+
+
+/* FALLBACK IF NO HISTORY EXISTS */
+
+else{
+
+timelineHTML = `
+
+<div class="timeline-item active">
+
+<div class="timeline-dot"></div>
+
+<div class="timeline-date">
+Shipment Created
+</div>
+
+<div class="timeline-location">
+UNEX Global Logistics
+</div>
+
+<div class="timeline-update">
+Shipment has been registered in our system.
+</div>
+
+</div>
+
+`;
+
+}
+
+
+/* DISPLAY */
+
 document.getElementById("shipmentContent")
 .innerHTML = `
+
 <div class="status">
 Status: ${escapeHtml(status)}
 </div>
+
 <div class="info">
 <strong>Origin:</strong>
 ${escapeHtml(data.Origin || "—")}
 </div>
+
 <div class="info">
 <strong>Destination:</strong>
 ${escapeHtml(data.Destination || "—")}
 </div>
+
 <div class="info">
 <strong>Estimated Delivery:</strong>
 ${escapeHtml(data.delivery || "—")}
 </div>
+
 <div class="timeline">
-<h2>Shipment Progress</h2>
-<div class="timeline-item active">
-<div class="timeline-dot"></div>
-<div class="timeline-date">
-Shipment Created
+
+<h2>Shipment History</h2>
+
+${timelineHTML}
+
 </div>
-<div class="timeline-location">
-UNEX Global Logistics
-</div>
-<div class="timeline-update">
-Shipment has been registered in our system.
-</div>
-</div>
-<div class="timeline-item ${transitActive ? "active" : ""}">
-<div class="timeline-dot"></div>
-<div class="timeline-date">
-In Transit
-</div>
-<div class="timeline-location">
-Shipment Network
-</div>
-<div class="timeline-update">
-Shipment is moving through the logistics network.
-</div>
-</div>
-<div class="timeline-item ${customsActive ? "active" : ""}">
-<div class="timeline-dot"></div>
-<div class="timeline-date">
-Customs
-</div>
-<div class="timeline-location">
-Customs Processing
-</div>
-<div class="timeline-update">
-Shipment may be undergoing customs clearance.
-</div>
-</div>
-<div class="timeline-item ${deliveryActive ? "active" : ""}">
-<div class="timeline-dot"></div>
-<div class="timeline-date">
-Out for Delivery
-</div>
-<div class="timeline-location">
-Destination Area
-</div>
-<div class="timeline-update">
-Shipment is being prepared for final delivery.
-</div>
-</div>
-<div class="timeline-item ${deliveredActive ? "active" : ""}">
-<div class="timeline-dot"></div>
-<div class="timeline-date">
-Delivered
-</div>
-<div class="timeline-location">
-Destination
-</div>
-<div class="timeline-update">
-Shipment has been delivered successfully.
-</div>
-</div>
-</div>
+
 `;
+
 }
+
+
 /* SECURITY */
+
 function escapeHtml(value){
+
 if(value === null ||
 value === undefined){
+
 return "";
+
 }
+
 return String(value)
 .replace(/&/g,"&amp;")
 .replace(/</g,"&lt;")
 .replace(/>/g,"&gt;")
 .replace(/"/g,"&quot;")
 .replace(/'/g,"&#039;");
+
 }
+
+
 loadShipment();
+
 </script>
+
 </body>
 </html>
