@@ -191,6 +191,10 @@ SUPABASE_PUBLISHABLE_KEY
 );
 
 
+/* =========================
+   LOAD SHIPMENT
+========================= */
+
 async function loadShipment(){
 
 const params =
@@ -198,6 +202,7 @@ new URLSearchParams(window.location.search);
 
 const number =
 (params.get("tracking") || "").trim();
+
 
 document.getElementById("trackingNo")
 .textContent = number;
@@ -217,7 +222,9 @@ return;
 }
 
 
-/* GET SHIPMENT */
+/* =========================
+   GET SHIPMENT
+========================= */
 
 const { data, error } =
 await supabaseClient
@@ -227,20 +234,11 @@ await supabaseClient
 )
 .eq("Tracking", number)
 .maybeSingle();
-const { data: history, error: historyError } =
-await supabaseClient
-.from("shipment_history")
-.select("status, note, created_at")
-.eq("tracking", number)
-.order("created_at", { ascending: true });
 
-if (historyError) {
-console.error("History error:", historyError);
-}
 
 if(error){
 
-console.error(error);
+console.error("Shipment error:", error);
 
 document.getElementById("shipmentContent")
 .innerHTML = `
@@ -268,13 +266,17 @@ return;
 }
 
 
-/* GET REAL SHIPMENT HISTORY */
+/* =========================
+   GET SHIPMENT HISTORY
+========================= */
 
-const { data: history, error: historyError } =
+let history = null;
+
+const historyResult =
 await supabaseClient
 .from("shipment_history")
 .select(
-"tracking, status, note, created_at"
+"status, note, created_at"
 )
 .eq("tracking", number)
 .order(
@@ -283,60 +285,81 @@ await supabaseClient
 );
 
 
-if(historyError){
+if(!historyResult.error){
 
-console.error(historyError);
+history = historyResult.data;
+
+}else{
+
+console.log(
+"Shipment history unavailable:",
+historyResult.error.message
+);
 
 }
 
 
-/* SHIPMENT INFORMATION */
+/* =========================
+   CURRENT STATUS
+========================= */
 
-let status =
+const status =
 data.Status || "Shipment Created";
 
-let statusLower =
+const statusLower =
 status.toLowerCase();
 
-let createdActive = true;
 
-let transitActive =
+const transitActive =
 statusLower.includes("transit") ||
 statusLower.includes("facility") ||
 statusLower.includes("customs") ||
 statusLower.includes("delivery") ||
 statusLower.includes("delivered");
 
-let customsActive =
+
+const customsActive =
 statusLower.includes("customs") ||
 statusLower.includes("delivery") ||
 statusLower.includes("delivered");
 
-let deliveryActive =
+
+const deliveryActive =
 statusLower.includes("delivery") ||
 statusLower.includes("delivered");
 
-let deliveredActive =
+
+const deliveredActive =
 statusLower.includes("delivered");
 
 
+/* =========================
+   TIMELINE
+========================= */
+
+let timelineHTML = "";
+
+
 /*
-Use real history when available.
-The visual timeline stays exactly the same.
+If real history exists,
+show the real history.
 */
 
-let historyText = "";
+if(history && history.length > 0){
 
-if (history && history.length > 0) {
+timelineHTML =
+history.map(item => {
 
-historyText = history
-.map(item => {
-
-const date = item.created_at
-? new Date(item.created_at).toLocaleString()
+const date =
+item.created_at
+? new Date(
+item.created_at
+).toLocaleString()
 : "";
 
+
 return `
+
 <div class="timeline-item active">
 
 <div class="timeline-dot"></div>
@@ -346,32 +369,36 @@ ${escapeHtml(date)}
 </div>
 
 <div class="timeline-location">
-${escapeHtml(item.status || "Shipment Update")}
+${escapeHtml(
+item.status ||
+"Shipment Update"
+)}
 </div>
 
 <div class="timeline-update">
 ${escapeHtml(
-item.note || "Shipment status updated."
+item.note ||
+"Shipment status updated."
 )}
 </div>
 
 </div>
+
 `;
 
-})
-.join("");
+}).join("");
 
 }
 
 
 /*
-If there is no history yet,
-keep the original timeline.
+If there is no history,
+use the original professional timeline.
 */
 
-if (!history || history.length === 0) {
+else{
 
-historyText = `
+timelineHTML = `
 
 <div class="timeline-item active">
 
@@ -391,7 +418,11 @@ Shipment has been registered in our system.
 
 </div>
 
-<div class="timeline-item ${transitActive ? "active" : ""}">
+
+<div class="timeline-item ${
+transitActive ? "active" : ""
+}">
+
 <div class="timeline-dot"></div>
 
 <div class="timeline-date">
@@ -408,7 +439,11 @@ Shipment is moving through the logistics network.
 
 </div>
 
-<div class="timeline-item ${customsActive ? "active" : ""}">
+
+<div class="timeline-item ${
+customsActive ? "active" : ""
+}">
+
 <div class="timeline-dot"></div>
 
 <div class="timeline-date">
@@ -425,7 +460,11 @@ Shipment may be undergoing customs clearance.
 
 </div>
 
-<div class="timeline-item ${deliveryActive ? "active" : ""}">
+
+<div class="timeline-item ${
+deliveryActive ? "active" : ""
+}">
+
 <div class="timeline-dot"></div>
 
 <div class="timeline-date">
@@ -442,7 +481,11 @@ Shipment is being prepared for final delivery.
 
 </div>
 
-<div class="timeline-item ${deliveredActive ? "active" : ""}">
+
+<div class="timeline-item ${
+deliveredActive ? "active" : ""
+}">
+
 <div class="timeline-dot"></div>
 
 <div class="timeline-date">
@@ -460,8 +503,13 @@ Shipment has been delivered successfully.
 </div>
 
 `;
+
 }
 
+
+/* =========================
+   DISPLAY SHIPMENT
+========================= */
 
 document.getElementById("shipmentContent")
 .innerHTML = `
@@ -485,18 +533,23 @@ ${escapeHtml(data.Destination || "—")}
 ${escapeHtml(data.delivery || "—")}
 </div>
 
+
 <div class="timeline">
 
 <h2>Shipment Progress</h2>
 
-${historyText}
+${timelineHTML}
 
 </div>
 
 `;
 
+}
 
-/* SECURITY */
+
+/* =========================
+   SECURITY
+========================= */
 
 function escapeHtml(value){
 
@@ -516,6 +569,10 @@ return String(value)
 
 }
 
+
+/* =========================
+   START
+========================= */
 
 loadShipment();
 
