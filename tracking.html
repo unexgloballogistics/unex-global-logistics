@@ -292,26 +292,51 @@ console.error(historyError);
 
 /* SHIPMENT INFORMATION */
 
-const status =
+let status =
 data.Status || "Shipment Created";
 
+let statusLower =
+status.toLowerCase();
 
-let timelineHTML = "";
+let createdActive = true;
+
+let transitActive =
+statusLower.includes("transit") ||
+statusLower.includes("facility") ||
+statusLower.includes("customs") ||
+statusLower.includes("delivery") ||
+statusLower.includes("delivered");
+
+let customsActive =
+statusLower.includes("customs") ||
+statusLower.includes("delivery") ||
+statusLower.includes("delivered");
+
+let deliveryActive =
+statusLower.includes("delivery") ||
+statusLower.includes("delivered");
+
+let deliveredActive =
+statusLower.includes("delivered");
 
 
-/* CREATE TIMELINE FROM HISTORY */
+/*
+Use real history when available.
+The visual timeline stays exactly the same.
+*/
 
-if(history && history.length > 0){
+let historyText = "";
 
-timelineHTML = history.map(item => {
+if (history && history.length > 0) {
 
-const date =
-item.created_at
+historyText = history
+.map(item => {
+
+const date = item.created_at
 ? new Date(item.created_at).toLocaleString()
 : "";
 
 return `
-
 <div class="timeline-item active">
 
 <div class="timeline-dot"></div>
@@ -325,23 +350,28 @@ ${escapeHtml(item.status || "Shipment Update")}
 </div>
 
 <div class="timeline-update">
-${escapeHtml(item.note || "Shipment status updated.")}
+${escapeHtml(
+item.note || "Shipment status updated."
+)}
 </div>
 
 </div>
-
 `;
 
-}).join("");
+})
+.join("");
 
 }
 
 
-/* FALLBACK IF NO HISTORY EXISTS */
+/*
+If there is no history yet,
+keep the original timeline.
+*/
 
-else{
+if (!history || history.length === 0) {
 
-timelineHTML = `
+historyText = `
 
 <div class="timeline-item active">
 
@@ -361,12 +391,77 @@ Shipment has been registered in our system.
 
 </div>
 
-`;
+<div class="timeline-item ${transitActive ? "active" : ""}">
+<div class="timeline-dot"></div>
 
+<div class="timeline-date">
+In Transit
+</div>
+
+<div class="timeline-location">
+Shipment Network
+</div>
+
+<div class="timeline-update">
+Shipment is moving through the logistics network.
+</div>
+
+</div>
+
+<div class="timeline-item ${customsActive ? "active" : ""}">
+<div class="timeline-dot"></div>
+
+<div class="timeline-date">
+Customs
+</div>
+
+<div class="timeline-location">
+Customs Processing
+</div>
+
+<div class="timeline-update">
+Shipment may be undergoing customs clearance.
+</div>
+
+</div>
+
+<div class="timeline-item ${deliveryActive ? "active" : ""}">
+<div class="timeline-dot"></div>
+
+<div class="timeline-date">
+Out for Delivery
+</div>
+
+<div class="timeline-location">
+Destination Area
+</div>
+
+<div class="timeline-update">
+Shipment is being prepared for final delivery.
+</div>
+
+</div>
+
+<div class="timeline-item ${deliveredActive ? "active" : ""}">
+<div class="timeline-dot"></div>
+
+<div class="timeline-date">
+Delivered
+</div>
+
+<div class="timeline-location">
+Destination
+</div>
+
+<div class="timeline-update">
+Shipment has been delivered successfully.
+</div>
+
+</div>
+
+`;
 }
 
-
-/* DISPLAY */
 
 document.getElementById("shipmentContent")
 .innerHTML = `
@@ -392,15 +487,13 @@ ${escapeHtml(data.delivery || "—")}
 
 <div class="timeline">
 
-<h2>Shipment History</h2>
+<h2>Shipment Progress</h2>
 
-${timelineHTML}
+${historyText}
 
 </div>
 
 `;
-
-}
 
 
 /* SECURITY */
