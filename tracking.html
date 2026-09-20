@@ -227,7 +227,16 @@ await supabaseClient
 )
 .eq("Tracking", number)
 .maybeSingle();
+const { data: history, error: historyError } =
+await supabaseClient
+.from("shipment_history")
+.select("status, note, created_at")
+.eq("tracking", number)
+.order("created_at", { ascending: true });
 
+if (historyError) {
+console.error("History error:", historyError);
+}
 
 if(error){
 
