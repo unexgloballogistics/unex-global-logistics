@@ -1,2561 +1,1468 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
-<meta charset="UTF-8">
-
-<meta
-  name="viewport"
-  content="width=device-width, initial-scale=1.0"
->
-
-<meta
-  name="description"
-  content="UNEX Global Logistics - Global shipping, freight forwarding, road transport and logistics solutions."
->
-
-<meta
-  name="theme-color"
-  content="#071a36"
->
-
-<title>
-UNEX Global Logistics | Global Shipping & Logistics
-</title>
-
-
-<style>
-
-/* =========================
-   RESET
-========================= */
-
-*{
-  box-sizing:border-box;
-  margin:0;
-  padding:0;
-}
-
-html{
-  scroll-behavior:smooth;
-}
-
-body{
-  font-family:
-    Arial,
-    Helvetica,
-    sans-serif;
-
-  color:#172033;
-
-  background:#f5f7fa;
-
-  line-height:1.6;
-}
-
-a{
-  text-decoration:none;
-  color:inherit;
-}
-
-img,
-video{
-  max-width:100%;
-}
-
-
-/* =========================
-   BRAND
-========================= */
-
-:root{
-
-  --navy:#071a36;
-
-  --blue:#0A3D91;
-
-  --blue-light:#1359c8;
-
-  --orange:#FF7A00;
-
-  --orange-dark:#e96800;
-
-  --white:#ffffff;
-
-  --light:#f5f7fa;
-
-  --text:#172033;
-
-  --muted:#687386;
-
-  --border:#e3e8ef;
-
-}
-
-
-/* =========================
-   NAVBAR
-========================= */
-
-.navbar{
-
-  position:fixed;
-
-  top:0;
-  left:0;
-  right:0;
-
-  z-index:1000;
-
-  background:
-    rgba(7,26,54,.92);
-
-  backdrop-filter:
-    blur(14px);
-
-  border-bottom:
-    1px solid rgba(255,255,255,.08);
-
-}
-
-.nav-inner{
-
-  max-width:1200px;
-
-  margin:auto;
-
-  padding:
-    16px 22px;
-
-  display:flex;
-
-  align-items:center;
-
-  justify-content:space-between;
-
-  gap:20px;
-
-}
-
-.logo{
-
-  color:white;
-
-  font-size:20px;
-
-  font-weight:800;
-
-  letter-spacing:.5px;
-
-}
-
-.logo span{
-
-  color:var(--orange);
-
-}
-
-.nav-links{
-
-  display:flex;
-
-  align-items:center;
-
-  gap:28px;
-
-}
-
-.nav-links a{
-
-  color:#e8eef7;
-
-  font-size:14px;
-
-  font-weight:600;
-
-  transition:.25s;
-
-}
-
-.nav-links a:hover{
-
-  color:var(--orange);
-
-}
-
-.nav-track{
-
-  background:var(--orange);
-
-  color:white !important;
-
-  padding:
-    10px 17px;
-
-  border-radius:7px;
-
-}
-
-.nav-track:hover{
-
-  background:var(--orange-dark);
-
-}
-
-
-/* =========================
-   HERO
-========================= */
-
-.hero{
-
-  min-height:100vh;
-
-  position:relative;
-
-  overflow:hidden;
-
-  display:flex;
-
-  align-items:center;
-
-  color:white;
-
-  background:#071a36;
-
-}
-
-.hero-video{
-
-  position:absolute;
-
-  inset:0;
-
-  width:100%;
-
-  height:100%;
-
-  object-fit:cover;
-
-  opacity:.52;
-
-}
-
-.hero-overlay{
-
-  position:absolute;
-
-  inset:0;
-
-  background:
-    linear-gradient(
-      90deg,
-      rgba(3,15,33,.94),
-      rgba(3,15,33,.70),
-      rgba(3,15,33,.32)
-    );
-
-}
-
-.hero-content{
-
-  position:relative;
-
-  z-index:2;
-
-  max-width:1200px;
-
-  width:100%;
-
-  margin:auto;
-
-  padding:
-    150px 22px
-    90px;
-
-}
-
-.brand-line{
-
-  display:inline-flex;
-
-  align-items:center;
-
-  gap:10px;
-
-  margin-bottom:22px;
-
-  font-size:13px;
-
-  font-weight:700;
-
-  letter-spacing:2px;
-
-  text-transform:uppercase;
-
-  color:#dce7f7;
-
-}
-
-.brand-line::before{
-
-  content:"";
-
-  width:32px;
-
-  height:2px;
-
-  background:var(--orange);
-
-}
-
-.hero h1{
-
-  max-width:800px;
-
-  font-size:
-    clamp(44px,7vw,82px);
-
-  line-height:1.02;
-
-  letter-spacing:-2px;
-
-  margin-bottom:24px;
-
-}
-
-.hero h1 span{
-
-  color:var(--orange);
-
-}
-
-.hero-text{
-
-  max-width:650px;
-
-  color:#d9e2ef;
-
-  font-size:19px;
-
-  margin-bottom:34px;
-
-}
-
-.hero-buttons{
-
-  display:flex;
-
-  flex-wrap:wrap;
-
-  gap:12px;
-
-}
-
-.btn{
-
-  display:inline-flex;
-
-  align-items:center;
-
-  justify-content:center;
-
-  min-height:50px;
-
-  padding:
-    0 24px;
-
-  border-radius:7px;
-
-  font-weight:700;
-
-  transition:.25s;
-
-}
-
-.btn-primary{
-
-  background:var(--orange);
-
-  color:white;
-
-}
-
-.btn-primary:hover{
-
-  background:var(--orange-dark);
-
-  transform:translateY(-2px);
-
-}
-
-.btn-outline{
-
-  border:
-    1px solid
-    rgba(255,255,255,.45);
-
-  color:white;
-
-  background:
-    rgba(255,255,255,.06);
-
-}
-
-.btn-outline:hover{
-
-  background:white;
-
-  color:var(--navy);
-
-}
-
-
-/* =========================
-   HERO STATS
-========================= */
-
-.hero-stats{
-
-  display:flex;
-
-  flex-wrap:wrap;
-
-  gap:35px;
-
-  margin-top:55px;
-
-}
-
-.hero-stat strong{
-
-  display:block;
-
-  font-size:28px;
-
-}
-
-.hero-stat span{
-
-  color:#b9c5d5;
-
-  font-size:13px;
-
-}
-
-
-/* =========================
-   SECTION
-========================= */
-
-.section{
-
-  padding:
-    95px 22px;
-
-}
-
-.section-inner{
-
-  max-width:1200px;
-
-  margin:auto;
-
-}
-
-.section-heading{
-
-  max-width:720px;
-
-  margin-bottom:50px;
-
-}
-
-.eyebrow{
-
-  color:var(--orange);
-
-  font-weight:800;
-
-  font-size:12px;
-
-  letter-spacing:2px;
-
-  text-transform:uppercase;
-
-  margin-bottom:10px;
-
-}
-
-.section-heading h2{
-
-  color:var(--navy);
-
-  font-size:
-    clamp(32px,5vw,50px);
-
-  line-height:1.1;
-
-  margin-bottom:15px;
-
-}
-
-.section-heading p{
-
-  color:var(--muted);
-
-  font-size:17px;
-
-}
-
-
-/* =========================
-   TRACKING
-========================= */
-
-.tracking-section{
-
-  background:white;
-
-}
-
-.tracking-box{
-
-  background:
-    linear-gradient(
-      135deg,
-      #071a36,
-      #0A3D91
-    );
-
-  border-radius:18px;
-
-  padding:
-    45px;
-
-  color:white;
-
-  display:grid;
-
-  grid-template-columns:
-    1fr 1fr;
-
-  gap:40px;
-
-  align-items:center;
-
-  box-shadow:
-    0 18px 50px
-    rgba(7,26,54,.18);
-
-}
-
-.tracking-box h2{
-
-  font-size:36px;
-
-  line-height:1.1;
-
-  margin-bottom:15px;
-
-}
-
-.tracking-box p{
-
-  color:#dce6f4;
-
-}
-
-.tracking-form{
-
-  background:white;
-
-  padding:24px;
-
-  border-radius:12px;
-
-}
-
-.tracking-form label{
-
-  display:block;
-
-  color:#263247;
-
-  font-size:13px;
-
-  font-weight:700;
-
-  margin-bottom:7px;
-
-}
-
-.tracking-form input{
-
-  width:100%;
-
-  height:52px;
-
-  border:
-    1px solid #d5dce6;
-
-  border-radius:7px;
-
-  padding:
-    0 15px;
-
-  font-size:16px;
-
-  outline:none;
-
-  margin-bottom:12px;
-
-}
-
-.tracking-form input:focus{
-
-  border-color:var(--blue);
-
-}
-
-.track-button{
-
-  width:100%;
-
-  height:52px;
-
-  border:none;
-
-  border-radius:7px;
-
-  background:var(--orange);
-
-  color:white;
-
-  font-size:16px;
-
-  font-weight:800;
-
-  cursor:pointer;
-
-}
-
-.track-button:hover{
-
-  background:var(--orange-dark);
-
-}
-
-
-/* =========================
-   SERVICES
-========================= */
-
-.services-grid{
-
-  display:grid;
-
-  grid-template-columns:
-    repeat(3,1fr);
-
-  gap:20px;
-
-}
-
-.service-card{
-
-  background:white;
-
-  border:
-    1px solid
-    var(--border);
-
-  border-radius:14px;
-
-  padding:30px;
-
-  transition:
-    transform .25s,
-    box-shadow .25s;
-
-}
-
-.service-card:hover{
-
-  transform:
-    translateY(-6px);
-
-  box-shadow:
-    0 15px 35px
-    rgba(7,26,54,.10);
-
-}
-
-.service-icon{
-
-  width:54px;
-
-  height:54px;
-
-  display:flex;
-
-  align-items:center;
-
-  justify-content:center;
-
-  background:#eef4ff;
-
-  color:var(--blue);
-
-  border-radius:10px;
-
-  font-size:25px;
-
-  margin-bottom:20px;
-
-}
-
-.service-card h3{
-
-  color:var(--navy);
-
-  font-size:20px;
-
-  margin-bottom:9px;
-
-}
-
-.service-card p{
-
-  color:var(--muted);
-
-  font-size:15px;
-
-}
-
-
-/* =========================
-   VIDEO SHOWCASE
-========================= */
-
-.dark-section{
-
-  background:#071a36;
-
-  color:white;
-
-}
-
-.dark-section .section-heading h2{
-
-  color:white;
-
-}
-
-.dark-section .section-heading p{
-
-  color:#b9c5d5;
-
-}
-
-.video-grid{
-
-  display:grid;
-
-  grid-template-columns:
-    2fr 1fr 1fr;
-
-  gap:18px;
-
-}
-
-.video-card{
-
-  position:relative;
-
-  height:390px;
-
-  overflow:hidden;
-
-  border-radius:14px;
-
-  background:#020b18;
-
-}
-
-.video-card.small{
-
-  height:390px;
-
-}
-
-.video-card video{
-
-  width:100%;
-
-  height:100%;
-
-  object-fit:cover;
-
-}
-
-.video-card::after{
-
-  content:"";
-
-  position:absolute;
-
-  inset:0;
-
-  background:
-    linear-gradient(
-      transparent 35%,
-      rgba(0,0,0,.78)
-    );
-
-  pointer-events:none;
-
-}
-
-.video-label{
-
-  position:absolute;
-
-  z-index:2;
-
-  left:22px;
-
-  right:22px;
-
-  bottom:20px;
-
-}
-
-.video-label h3{
-
-  font-size:21px;
-
-  margin-bottom:4px;
-
-}
-
-.video-label p{
-
-  color:#d5dce7;
-
-  font-size:13px;
-
-}
-
-
-/* =========================
-   PHOTO GALLERY
-========================= */
-
-.gallery{
-
-  display:grid;
-
-  grid-template-columns:
-    1.4fr 1fr 1fr;
-
-  grid-auto-rows:240px;
-
-  gap:15px;
-
-}
-
-.gallery img{
-
-  width:100%;
-
-  height:100%;
-
-  object-fit:cover;
-
-  border-radius:12px;
-
-  display:block;
-
-}
-
-.gallery .large{
-
-  grid-row:
-    span 2;
-
-}
-
-
-/* =========================
-   ABOUT
-========================= */
-
-.about-grid{
-
-  display:grid;
-
-  grid-template-columns:
-    1fr 1fr;
-
-  gap:65px;
-
-  align-items:center;
-
-}
-
-.about-image{
-
-  position:relative;
-
-}
-
-.about-image img{
-
-  width:100%;
-
-  height:520px;
-
-  object-fit:cover;
-
-  border-radius:15px;
-
-}
-
-.about-badge{
-
-  position:absolute;
-
-  bottom:25px;
-
-  right:-15px;
-
-  background:var(--orange);
-
-  color:white;
-
-  padding:20px;
-
-  border-radius:10px;
-
-  box-shadow:
-    0 10px 25px
-    rgba(0,0,0,.18);
-
-}
-
-.about-badge strong{
-
-  display:block;
-
-  font-size:26px;
-
-}
-
-.about-content h2{
-
-  color:var(--navy);
-
-  font-size:44px;
-
-  line-height:1.1;
-
-  margin-bottom:18px;
-
-}
-
-.about-content p{
-
-  color:var(--muted);
-
-  margin-bottom:18px;
-
-}
-
-.about-list{
-
-  list-style:none;
-
-  margin-top:25px;
-
-}
-
-.about-list li{
-
-  margin-bottom:13px;
-
-  font-weight:600;
-
-}
-
-.about-list li::before{
-
-  content:"✓";
-
-  color:var(--orange);
-
-  font-weight:900;
-
-  margin-right:10px;
-
-}
-
-
-/* =========================
-   CLIENT EXPERIENCE
-========================= */
-
-.experience{
-
-  background:white;
-
-}
-
-.review-grid{
-
-  display:grid;
-
-  grid-template-columns:
-    repeat(3,1fr);
-
-  gap:20px;
-
-}
-
-.review-card{
-
-  border:
-    1px solid
-    var(--border);
-
-  border-radius:14px;
-
-  padding:28px;
-
-  background:#fff;
-
-}
-
-.stars{
-
-  color:var(--orange);
-
-  letter-spacing:2px;
-
-  margin-bottom:15px;
-
-}
-
-.review-card p{
-
-  color:#465268;
-
-  font-size:16px;
-
-  margin-bottom:22px;
-
-}
-
-.review-author{
-
-  display:flex;
-
-  align-items:center;
-
-  gap:12px;
-
-}
-
-.author-dot{
-
-  width:38px;
-
-  height:38px;
-
-  border-radius:50%;
-
-  background:
-    linear-gradient(
-      135deg,
-      var(--blue),
-      var(--orange)
-    );
-
-}
-
-.review-author strong{
-
-  color:var(--navy);
-
-  display:block;
-
-  font-size:14px;
-
-}
-
-.review-author span{
-
-  color:var(--muted);
-
-  font-size:12px;
-
-}
-
-
-/* =========================
-   CTA
-========================= */
-
-.cta{
-
-  background:
-    linear-gradient(
-      135deg,
-      #071a36,
-      #0A3D91
-    );
-
-  color:white;
-
-  text-align:center;
-
-  padding:
-    85px 22px;
-
-}
-
-.cta h2{
-
-  font-size:
-    clamp(34px,5vw,52px);
-
-  line-height:1.1;
-
-  margin-bottom:15px;
-
-}
-
-.cta p{
-
-  color:#d7e0ed;
-
-  max-width:650px;
-
-  margin:
-    0 auto 28px;
-
-}
-
-
-/* =========================
-   FOOTER
-========================= */
-
-footer{
-
-  background:#041126;
-
-  color:white;
-
-  padding:
-    55px 22px 25px;
-
-}
-
-.footer-grid{
-
-  max-width:1200px;
-
-  margin:auto;
-
-  display:grid;
-
-  grid-template-columns:
-    2fr 1fr 1fr 1fr;
-
-  gap:35px;
-
-}
-
-.footer-brand h3{
-
-  font-size:21px;
-
-  margin-bottom:12px;
-
-}
-
-.footer-brand h3 span{
-
-  color:var(--orange);
-
-}
-
-.footer-brand p{
-
-  color:#9eabbd;
-
-  max-width:380px;
-
-  font-size:14px;
-
-}
-
-footer h4{
-
-  margin-bottom:14px;
-
-  font-size:14px;
-
-}
-
-footer a{
-
-  display:block;
-
-  color:#9eabbd;
-
-  font-size:14px;
-
-  margin-bottom:9px;
-
-}
-
-footer a:hover{
-
-  color:var(--orange);
-
-}
-
-.footer-bottom{
-
-  max-width:1200px;
-
-  margin:
-    40px auto 0;
-
-  padding-top:20px;
-
-  border-top:
-    1px solid
-    rgba(255,255,255,.08);
-
-  color:#7f8b9e;
-
-  font-size:12px;
-
-  display:flex;
-
-  justify-content:space-between;
-
-  gap:20px;
-
-}
-
-
-/* =========================
-   MOBILE
-========================= */
-
-@media(max-width:900px){
-
-  .nav-links a:not(.nav-track){
-
-    display:none;
-
-  }
-
-  .hero-content{
-
-    padding:
-      140px 22px
-      80px;
-
-  }
-
-  .hero h1{
-
-    letter-spacing:-1px;
-
-  }
-
-  .tracking-box{
-
-    grid-template-columns:1fr;
-
-    padding:28px;
-
-  }
-
-  .services-grid{
-
-    grid-template-columns:
-      1fr 1fr;
-
-  }
-
-  .video-grid{
-
-    grid-template-columns:
-      1fr 1fr;
-
-  }
-
-  .video-card{
-
-    height:320px;
-
-  }
-
-  .video-card:first-child{
-
-    grid-column:
-      span 2;
-
-  }
-
-  .about-grid{
-
-    grid-template-columns:1fr;
-
-  }
-
-  .about-image img{
-
-    height:400px;
-
-  }
-
-  .review-grid{
-
-    grid-template-columns:
-      1fr 1fr;
-
-  }
-
-  .footer-grid{
-
-    grid-template-columns:
-      1fr 1fr;
-
-  }
-
-}
-
-@media(max-width:600px){
-
-  .section{
-
-    padding:
-      70px 18px;
-
-  }
-
-  .nav-inner{
-
-    padding:
-      14px 16px;
-
-  }
-
-  .logo{
-
-    font-size:17px;
-
-  }
-
-  .hero-content{
-
-    padding:
-      125px 18px
-      70px;
-
-  }
-
-  .hero h1{
-
-    font-size:46px;
-
-  }
-
-  .hero-text{
-
-    font-size:16px;
-
-  }
-
-  .hero-stats{
-
-    gap:20px;
-
-  }
-
-  .hero-stat strong{
-
-    font-size:22px;
-
-  }
-
-  .tracking-box{
-
-    padding:22px;
-
-    border-radius:12px;
-
-  }
-
-  .tracking-box h2{
-
-    font-size:30px;
-
-  }
-
-  .services-grid{
-
-    grid-template-columns:1fr;
-
-  }
-
-  .video-grid{
-
-    grid-template-columns:1fr;
-
-  }
-
-  .video-card,
-  .video-card.small{
-
-    height:330px;
-
-  }
-
-  .video-card:first-child{
-
-    grid-column:auto;
-
-  }
-
-  .gallery{
-
-    grid-template-columns:1fr 1fr;
-
-    grid-auto-rows:170px;
-
-  }
-
-  .gallery .large{
-
-    grid-column:
-      span 2;
-
-    grid-row:
-      span 1;
-
-  }
-
-  .about-content h2{
-
-    font-size:35px;
-
-  }
-
-  .review-grid{
-
-    grid-template-columns:1fr;
-
-  }
-
-  .footer-grid{
-
-    grid-template-columns:1fr;
-
-  }
-
-  .footer-bottom{
-
-    flex-direction:column;
-
-  }
-
-}
-
-
-/* =========================
-   ACCESSIBILITY
-========================= */
-
-@media(prefers-reduced-motion:reduce){
-
-  html{
-
-    scroll-behavior:auto;
-
-  }
-
-  *{
-
-    transition:none !important;
-
-  }
-
-}
-
-</style>
-
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>UNEX Global Logistics | Global Shipping & Transport</title>
+
+  <meta
+    name="description"
+    content="UNEX Global Logistics — professional global shipping, freight, vehicle transport and logistics solutions."
+  >
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: #f5f7fa;
+      color: #17202a;
+      line-height: 1.6;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    /* ================= HEADER ================= */
+
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 1000;
+      background: rgba(7, 17, 30, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .nav {
+      max-width: 1200px;
+      margin: auto;
+      height: 72px;
+      padding: 0 22px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: white;
+      font-weight: 800;
+      letter-spacing: .5px;
+    }
+
+    .logo {
+      width: 42px;
+      height: 42px;
+      border-radius: 10px;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(135deg, #0d6efd, #00a6ff);
+      color: white;
+      font-size: 17px;
+      font-weight: 900;
+    }
+
+    .brand-text span {
+      display: block;
+      font-size: 16px;
+    }
+
+    .brand-text small {
+      color: #9eb0c3;
+      font-size: 10px;
+      letter-spacing: 1.4px;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 25px;
+      color: #dbe5ef;
+      font-size: 14px;
+    }
+
+    .nav-links a:hover {
+      color: #4db8ff;
+    }
+
+    @media(max-width: 760px) {
+      .nav-links {
+        display: none;
+      }
+    }
+
+    /* ================= HERO ================= */
+
+    .hero {
+      min-height: 100vh;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      padding: 105px 20px 45px;
+      color: white;
+    }
+
+    .hero-video {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: -3;
+    }
+
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(
+          90deg,
+          rgba(4,12,22,.94),
+          rgba(4,12,22,.68),
+          rgba(4,12,22,.38)
+        );
+      z-index: -2;
+    }
+
+    .hero-grid {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.035) 1px, transparent 1px);
+      background-size: 45px 45px;
+      opacity: .5;
+      z-index: -1;
+    }
+
+    .hero-content {
+      width: 100%;
+      max-width: 1200px;
+      margin: auto;
+      display: grid;
+      grid-template-columns: 1.25fr .75fr;
+      gap: 35px;
+      align-items: center;
+    }
+
+    .hero-copy {
+      max-width: 680px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 12px;
+      border: 1px solid rgba(255,255,255,.2);
+      border-radius: 30px;
+      background: rgba(255,255,255,.08);
+      color: #dcecff;
+      font-size: 12px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 18px;
+    }
+
+    .eyebrow i {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #35c7ff;
+      display: inline-block;
+    }
+
+    h1 {
+      font-size: clamp(42px, 7vw, 78px);
+      line-height: .98;
+      letter-spacing: -3px;
+      margin-bottom: 22px;
+    }
+
+    .hero-copy p {
+      color: #d4e0ec;
+      font-size: 17px;
+      max-width: 620px;
+      margin-bottom: 25px;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      padding: 13px 19px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 14px;
+      display: inline-block;
+      cursor: pointer;
+      border: 0;
+    }
+
+    .btn-primary {
+      background: #087ff5;
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: #056bd1;
+    }
+
+    .btn-light {
+      background: rgba(255,255,255,.1);
+      border: 1px solid rgba(255,255,255,.25);
+      color: white;
+    }
+
+    /* ================= TRACKING CARD ================= */
+
+    .tracking-card {
+      background: rgba(255,255,255,.96);
+      color: #18222d;
+      padding: 25px;
+      border-radius: 18px;
+      box-shadow: 0 25px 70px rgba(0,0,0,.28);
+    }
+
+    .tracking-card h2 {
+      font-size: 22px;
+      margin-bottom: 5px;
+    }
+
+    .tracking-card p {
+      color: #657383;
+      font-size: 13px;
+      margin-bottom: 18px;
+    }
+
+    .tracking-card input {
+      width: 100%;
+      padding: 14px;
+      border: 1px solid #d9e0e7;
+      border-radius: 8px;
+      outline: none;
+      font-size: 14px;
+      margin-bottom: 10px;
+    }
+
+    .tracking-card button {
+      width: 100%;
+      padding: 14px;
+      background: #087ff5;
+      border: 0;
+      border-radius: 8px;
+      color: white;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .tracking-card button:hover {
+      background: #056bd1;
+    }
+
+    .handle {
+      margin-top: 13px;
+      text-align: center;
+      font-size: 11px;
+      color: #8492a0;
+      letter-spacing: .8px;
+    }
+
+    /* ================= MINI MEDIA ================= */
+
+    .hero-media {
+      max-width: 1200px;
+      margin: -15px auto 0;
+      padding: 0 20px;
+      position: relative;
+      z-index: 5;
+    }
+
+    .mini-media {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+
+    .mini-card {
+      height: 145px;
+      overflow: hidden;
+      border-radius: 13px;
+      position: relative;
+      background: #111;
+      box-shadow: 0 12px 35px rgba(0,0,0,.18);
+    }
+
+    .mini-card video,
+    .mini-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .mini-card::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        transparent 35%,
+        rgba(0,0,0,.7)
+      );
+    }
+
+    .mini-label {
+      position: absolute;
+      z-index: 2;
+      left: 13px;
+      bottom: 11px;
+      color: white;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: .4px;
+    }
+
+    @media(max-width: 700px) {
+      .hero-content {
+        grid-template-columns: 1fr;
+      }
+
+      .hero {
+        min-height: auto;
+        padding-top: 115px;
+        padding-bottom: 40px;
+      }
+
+      h1 {
+        letter-spacing: -2px;
+      }
+
+      .tracking-card {
+        max-width: 500px;
+      }
+
+      .mini-media {
+        grid-template-columns: 1fr 1fr 1fr;
+      }
+
+      .mini-card {
+        height: 105px;
+      }
+    }
+
+    /* ================= GENERAL ================= */
+
+    section {
+      padding: 85px 20px;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    .section-title {
+      text-align: center;
+      max-width: 680px;
+      margin: 0 auto 45px;
+    }
+
+    .section-title span {
+      color: #087ff5;
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+    }
+
+    .section-title h2 {
+      font-size: clamp(30px, 5vw, 44px);
+      line-height: 1.1;
+      margin: 8px 0 12px;
+    }
+
+    .section-title p {
+      color: #667483;
+    }
+
+    /* ================= FEEDBACK ================= */
+
+    .feedback-section {
+      background: white;
+      padding-top: 65px;
+      padding-bottom: 65px;
+    }
+
+    .feedback-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .feedback {
+      border: 1px solid #e5eaf0;
+      background: #fafbfd;
+      padding: 25px;
+      border-radius: 14px;
+    }
+
+    .stars {
+      color: #f5a623;
+      letter-spacing: 2px;
+      margin-bottom: 12px;
+      font-size: 14px;
+    }
+
+    .feedback p {
+      color: #566473;
+      font-size: 14px;
+      margin-bottom: 18px;
+    }
+
+    .feedback strong {
+      font-size: 13px;
+      color: #1c2733;
+    }
+
+    .feedback small {
+      display: block;
+      color: #8793a0;
+      margin-top: 2px;
+    }
+
+    @media(max-width: 750px) {
+      .feedback-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* ================= SERVICES ================= */
+
+    .services {
+      background: #f5f7fa;
+    }
+
+    .service-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+
+    .service {
+      background: white;
+      border: 1px solid #e4e9ee;
+      border-radius: 14px;
+      padding: 25px;
+      transition: .25s;
+    }
+
+    .service:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 15px 35px rgba(20,40,60,.08);
+    }
+
+    .service-icon {
+      width: 45px;
+      height: 45px;
+      display: grid;
+      place-items: center;
+      border-radius: 10px;
+      background: #e9f4ff;
+      color: #087ff5;
+      font-size: 22px;
+      margin-bottom: 18px;
+    }
+
+    .service h3 {
+      font-size: 17px;
+      margin-bottom: 8px;
+    }
+
+    .service p {
+      color: #687685;
+      font-size: 13px;
+    }
+
+    @media(max-width: 850px) {
+      .service-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media(max-width: 500px) {
+      .service-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* ================= MEDIA SECTION ================= */
+
+    .media-section {
+      background: #0a1522;
+      color: white;
+    }
+
+    .media-section .section-title p {
+      color: #9cabb9;
+    }
+
+    .video-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .video-box {
+      background: #111d2b;
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 15px;
+      overflow: hidden;
+    }
+
+    .video-box video {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .video-info {
+      padding: 17px;
+    }
+
+    .video-info h3 {
+      font-size: 15px;
+      margin-bottom: 4px;
+    }
+
+    .video-info p {
+      color: #92a2b1;
+      font-size: 12px;
+    }
+
+    @media(max-width: 750px) {
+      .video-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .video-box video {
+        height: 230px;
+      }
+    }
+
+    /* ================= IMAGE GALLERY ================= */
+
+    .gallery {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr 1fr;
+      gap: 12px;
+    }
+
+    .gallery img {
+      width: 100%;
+      height: 230px;
+      object-fit: cover;
+      border-radius: 13px;
+      display: block;
+    }
+
+    .gallery img:first-child {
+      height: 472px;
+      grid-row: span 2;
+    }
+
+    @media(max-width: 700px) {
+      .gallery {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .gallery img,
+      .gallery img:first-child {
+        height: 170px;
+      }
+
+      .gallery img:first-child {
+        grid-column: span 2;
+      }
+    }
+
+    /* ================= ABOUT ================= */
+
+    .about {
+      background: white;
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+    }
+
+    .about h2 {
+      font-size: 40px;
+      line-height: 1.1;
+      margin-bottom: 17px;
+    }
+
+    .about p {
+      color: #63717f;
+      margin-bottom: 15px;
+    }
+
+    .about-list {
+      margin-top: 20px;
+      display: grid;
+      gap: 10px;
+    }
+
+    .about-list div {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      font-weight: 600;
+      font-size: 14px;
+    }
+
+    .check {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: #e8f4ff;
+      color: #087ff5;
+      font-size: 12px;
+    }
+
+    .about-visual {
+      min-height: 390px;
+      border-radius: 18px;
+      overflow: hidden;
+      position: relative;
+      background:
+        linear-gradient(rgba(7,20,35,.25), rgba(7,20,35,.6)),
+        url("https://images.unsplash.com/photo-1774929107410-9cb5fb83fea6?auto=format&fit=crop&fm=jpg&q=85&w=1600")
+        center/cover;
+    }
+
+    .route-box {
+      position: absolute;
+      left: 25px;
+      right: 25px;
+      bottom: 25px;
+      padding: 17px;
+      border-radius: 12px;
+      background: rgba(5,15,26,.78);
+      color: white;
+      backdrop-filter: blur(8px);
+    }
+
+    .route-line {
+      height: 2px;
+      background: #3db7ff;
+      margin: 14px 0;
+      position: relative;
+    }
+
+    .route-line::before,
+    .route-line::after {
+      content: "";
+      position: absolute;
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: white;
+      top: -4px;
+    }
+
+    .route-line::before {
+      left: 0;
+    }
+
+    .route-line::after {
+      right: 0;
+    }
+
+    @media(max-width: 750px) {
+      .about-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .about h2 {
+        font-size: 32px;
+      }
+    }
+
+    /* ================= CTA ================= */
+
+    .cta {
+      background:
+        linear-gradient(120deg, #0676e8, #063f82);
+      color: white;
+      text-align: center;
+    }
+
+    .cta h2 {
+      font-size: clamp(30px, 5vw, 48px);
+      margin-bottom: 12px;
+    }
+
+    .cta p {
+      color: #d8ebff;
+      max-width: 600px;
+      margin: 0 auto 25px;
+    }
+
+    /* ================= FOOTER ================= */
+
+    footer {
+      background: #07111d;
+      color: white;
+      padding: 40px 20px 25px;
+    }
+
+    .footer-grid {
+      max-width: 1200px;
+      margin: auto;
+      display: grid;
+      grid-template-columns: 1.5fr 1fr 1fr;
+      gap: 35px;
+    }
+
+    footer h3 {
+      margin-bottom: 12px;
+    }
+
+    footer p,
+    footer a {
+      color: #91a1b1;
+      font-size: 13px;
+    }
+
+    footer a:hover {
+      color: white;
+    }
+
+    .footer-bottom {
+      max-width: 1200px;
+      margin: 30px auto 0;
+      padding-top: 18px;
+      border-top: 1px solid rgba(255,255,255,.08);
+      text-align: center;
+      color: #708090;
+      font-size: 11px;
+    }
+
+    @media(max-width: 700px) {
+      .footer-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+  </style>
 </head>
-
 
 <body>
 
+<!-- ================= HEADER ================= -->
 
-<!-- =========================
-     NAVIGATION
-========================= -->
+<header>
+  <div class="nav">
 
-<header class="navbar">
+    <a href="#home" class="brand">
+      <div class="logo">U</div>
 
-<div class="nav-inner">
+      <div class="brand-text">
+        <span>UNEX GLOBAL</span>
+        <small>LOGISTICS</small>
+      </div>
+    </a>
 
-<a
-  href="index.html"
-  class="logo"
->
-  UNEX<span>GLOBAL</span>
-</a>
+    <nav class="nav-links">
+      <a href="#home">Home</a>
+      <a href="#services">Services</a>
+      <a href="#feedback">Feedback</a>
+      <a href="#media">Media</a>
+      <a href="#about">About</a>
+      <a href="#tracking">Tracking</a>
+    </nav>
 
-
-<nav class="nav-links">
-
-<a href="#services">
-  Services
-</a>
-
-<a href="#about">
-  About
-</a>
-
-<a href="#media">
-  Media
-</a>
-
-<a
-  href="tracking.html"
-  class="nav-track"
->
-  Track Shipment
-</a>
-
-</nav>
-
-</div>
-
+  </div>
 </header>
 
 
+<!-- ================= HERO ================= -->
 
-<!-- =========================
-     HERO
-========================= -->
+<section class="hero" id="home">
 
-<section class="hero">
+  <!-- MAIN SHIP VIDEO -->
+  <video
+    class="hero-video"
+    autoplay
+    muted
+    loop
+    playsinline
+    preload="metadata"
+  >
+    <source
+      src="https://videos.pexels.com/video-files/15187012/15187012-uhd_3840_2160_30fps.mp4"
+      type="video/mp4"
+    >
+  </video>
 
-<video
-  class="hero-video"
-  autoplay
-  muted
-  loop
-  playsinline
-  poster="https://images.unsplash.com/photo-1774929108070-b60d3879e071?auto=format&fit=crop&fm=jpg&q=80&w=1800"
->
+  <div class="hero-overlay"></div>
+  <div class="hero-grid"></div>
 
-<source
-  src="https://videos.pexels.com/video-files/15187012/15187012-uhd_3840_2160_30fps.mp4"
-  type="video/mp4"
->
+  <div class="hero-content">
 
-</video>
+    <div class="hero-copy">
 
+      <div class="eyebrow">
+        <i></i>
+        Global Shipping & Logistics
+      </div>
 
-<div class="hero-overlay"></div>
+      <h1>
+        Moving the world.<br>
+        Moving your business.
+      </h1>
 
+      <p>
+        UNEX Global Logistics connects ocean freight,
+        road transport and vehicle movement through
+        professional logistics coordination.
+      </p>
 
-<div class="hero-content">
+      <div class="hero-buttons">
+        <a href="#tracking" class="btn btn-primary">
+          Track Shipment
+        </a>
 
-<div class="brand-line">
-  unexgloballogistics
-</div>
+        <a href="#services" class="btn btn-light">
+          Explore Services
+        </a>
+      </div>
 
-
-<h1>
-
-Global logistics.
-<br>
-
-<strong>
-Moving business
-<span>forward.</span>
-</strong>
-
-</h1>
-
-
-<p class="hero-text">
-
-UNEX Global Logistics connects businesses and people
-to reliable shipping, freight forwarding and
-transport solutions across borders.
-
-</p>
-
-
-<div class="hero-buttons">
-
-<a
-  href="tracking.html"
-  class="btn btn-primary"
->
-  Track a Shipment
-</a>
-
-<a
-  href="#contact"
-  class="btn btn-outline"
->
-  Request a Quote
-</a>
-
-</div>
+    </div>
 
 
-<div class="hero-stats">
+    <!-- TRACKING -->
 
-<div class="hero-stat">
+    <div class="tracking-card" id="tracking">
 
-<strong>
-01
-</strong>
+      <h2>Track Your Shipment</h2>
 
-<span>
-Global Logistics
-</span>
+      <p>
+        Enter your UNEX tracking number to view shipment status.
+      </p>
 
-</div>
+      <input
+        type="text"
+        id="trackingNumber"
+        placeholder="e.g. UNEX22541"
+      >
 
+      <button onclick="trackShipment()">
+        Track Shipment
+      </button>
 
-<div class="hero-stat">
+      <div class="handle">
+        @unexgloballogistics
+      </div>
 
-<strong>
-24/7
-</strong>
+    </div>
 
-<span>
-Shipment Visibility
-</span>
-
-</div>
-
-
-<div class="hero-stat">
-
-<strong>
-SEA • ROAD • AIR
-</strong>
-
-<span>
-Transport Solutions
-</span>
-
-</div>
-
-</div>
-
-</div>
+  </div>
 
 </section>
 
 
+<!-- ================= SMALL MEDIA RIGHT BELOW HERO ================= -->
 
-<!-- =========================
-     TRACKING
-========================= -->
+<div class="hero-media">
 
-<section class="section tracking-section">
+  <div class="mini-media">
 
-<div class="section-inner">
+    <div class="mini-card">
+      <video
+        autoplay
+        muted
+        loop
+        playsinline
+      >
+        <source
+          src="https://videos.pexels.com/video-files/34484775/14612569_1080_1920_30fps.mp4"
+          type="video/mp4"
+        >
+      </video>
 
-<div class="tracking-box">
+      <div class="mini-label">
+        ROAD FREIGHT
+      </div>
+    </div>
 
-<div>
 
-<div class="eyebrow">
-Shipment Tracking
+    <div class="mini-card">
+
+      <img
+        src="https://images.unsplash.com/photo-1774929107123-dd8309c1c645?auto=format&fit=crop&fm=jpg&q=85&w=1600"
+        alt="Container truck at port"
+      >
+
+      <div class="mini-label">
+        CONTAINER TRANSPORT
+      </div>
+
+    </div>
+
+
+    <div class="mini-card">
+
+      <video
+        autoplay
+        muted
+        loop
+        playsinline
+      >
+        <source
+          src="https://videos.pexels.com/video-files/12480130/12480130-hd_1080_1920_60fps.mp4"
+          type="video/mp4"
+        >
+      </video>
+
+      <div class="mini-label">
+        VEHICLE MOVEMENT
+      </div>
+
+    </div>
+
+  </div>
+
 </div>
 
-<h2>
-Know where your shipment is.
-</h2>
 
-<p>
-Enter your UNEX tracking number to view
-your shipment status and progress.
-</p>
+<!-- ================= CLIENT FEEDBACK ================= -->
 
-</div>
+<section class="feedback-section" id="feedback">
+
+  <div class="container">
+
+    <div class="section-title">
+
+      <span>Client Experience</span>
+
+      <h2>
+        What clients value about UNEX
+      </h2>
+
+      <p>
+        Professional logistics is built around visibility,
+        communication and dependable coordination.
+      </p>
+
+    </div>
 
 
-<div class="tracking-form">
+    <div class="feedback-grid">
 
-<label for="trackingInput">
-Tracking Number
-</label>
+      <div class="feedback">
 
-<input
-  id="trackingInput"
-  type="text"
-  placeholder="Example: UNEX22541"
-  autocomplete="off"
->
+        <div class="stars">★★★★★</div>
 
-<button
-  class="track-button"
-  onclick="trackShipment()"
->
-  Track Shipment
-</button>
+        <p>
+          Clear shipment visibility from booking through
+          delivery helps keep every movement organized.
+        </p>
 
-</div>
+        <strong>Clear Communication</strong>
+        <small>Shipment visibility</small>
 
-</div>
+      </div>
 
-</div>
+
+      <div class="feedback">
+
+        <div class="stars">★★★★★</div>
+
+        <p>
+          Freight coordination designed to keep cargo,
+          vehicles and transport operations moving efficiently.
+        </p>
+
+        <strong>Professional Coordination</strong>
+        <small>Global logistics</small>
+
+      </div>
+
+
+      <div class="feedback">
+
+        <div class="stars">★★★★★</div>
+
+        <p>
+          A clean tracking experience gives customers
+          a simple way to stay informed about their shipment.
+        </p>
+
+        <strong>Easy Tracking</strong>
+        <small>Customer visibility</small>
+
+      </div>
+
+    </div>
+
+  </div>
 
 </section>
 
 
+<!-- ================= SERVICES ================= -->
 
-<!-- =========================
-     SERVICES
-========================= -->
+<section class="services" id="services">
 
-<section
-  class="section"
-  id="services"
->
+  <div class="container">
 
-<div class="section-inner">
+    <div class="section-title">
 
-<div class="section-heading">
+      <span>Our Services</span>
 
-<div class="eyebrow">
-Our Services
-</div>
+      <h2>Logistics built around movement</h2>
 
-<h2>
-Logistics built around your cargo.
-</h2>
+      <p>
+        Flexible transportation solutions for cargo,
+        vehicles and international freight.
+      </p>
 
-<p>
-From ocean freight to road transportation,
-UNEX Global Logistics provides practical
-solutions for moving goods efficiently.
-</p>
-
-</div>
+    </div>
 
 
-<div class="services-grid">
+    <div class="service-grid">
+
+      <div class="service">
+
+        <div class="service-icon">🚢</div>
+
+        <h3>Ocean Freight</h3>
+
+        <p>
+          Container shipping and international cargo
+          movement by sea.
+        </p>
+
+      </div>
 
 
-<div class="service-card">
+      <div class="service">
 
-<div class="service-icon">
-🚢
-</div>
+        <div class="service-icon">🚛</div>
 
-<h3>
-Ocean Freight
-</h3>
+        <h3>Road Freight</h3>
 
-<p>
-Container shipping and sea freight solutions
-for international cargo movement.
-</p>
+        <p>
+          Road transportation and freight coordination
+          for efficient inland movement.
+        </p>
 
-</div>
+      </div>
 
 
-<div class="service-card">
+      <div class="service">
 
-<div class="service-icon">
-🚛
-</div>
+        <div class="service-icon">🚗</div>
 
-<h3>
-Road Transport
-</h3>
+        <h3>Vehicle Transport</h3>
 
-<p>
-Reliable road transportation for cargo
-moving between ports, facilities and destinations.
-</p>
+        <p>
+          Professional coordination for cars,
+          commercial vehicles and other units.
+        </p>
 
-</div>
+      </div>
 
 
-<div class="service-card">
+      <div class="service">
 
-<div class="service-icon">
-✈️
-</div>
+        <div class="service-icon">🌍</div>
 
-<h3>
-Air Freight
-</h3>
+        <h3>Global Logistics</h3>
 
-<p>
-Time-sensitive cargo solutions designed
-for speed and international connectivity.
-</p>
+        <p>
+          Connected logistics support across
+          international transportation routes.
+        </p>
 
-</div>
+      </div>
 
+    </div>
 
-<div class="service-card">
-
-<div class="service-icon">
-📦
-</div>
-
-<h3>
-Freight Forwarding
-</h3>
-
-<p>
-Coordinated freight movement from origin
-to destination with clear shipment visibility.
-</p>
-
-</div>
-
-
-<div class="service-card">
-
-<div class="service-icon">
-🏭
-</div>
-
-<h3>
-Warehousing
-</h3>
-
-<p>
-Organized cargo handling and storage support
-for logistics operations.
-</p>
-
-</div>
-
-
-<div class="service-card">
-
-<div class="service-icon">
-🌍
-</div>
-
-<h3>
-Global Logistics
-</h3>
-
-<p>
-Connected logistics solutions for businesses
-moving goods across international markets.
-</p>
-
-</div>
-
-
-</div>
-
-</div>
+  </div>
 
 </section>
 
 
+<!-- ================= MEDIA ================= -->
 
-<!-- =========================
-     VIDEO MEDIA
-========================= -->
+<section class="media-section" id="media">
 
-<section
-  class="section dark-section"
-  id="media"
->
+  <div class="container">
 
-<div class="section-inner">
+    <div class="section-title">
 
-<div class="section-heading">
+      <span>UNEX Movement</span>
 
-<div class="eyebrow">
-Inside Logistics
-</div>
+      <h2>Ships. Trucks. Vehicles. Worldwide.</h2>
 
-<h2>
-Ships. Roads. Cargo. Movement.
-</h2>
+      <p>
+        A visual look at the world of transportation
+        behind global logistics.
+      </p>
 
-<p>
-A visual look at the world of freight and
-transportation behind global supply chains.
-</p>
-
-</div>
+    </div>
 
 
-<div class="video-grid">
+    <div class="video-grid">
+
+      <div class="video-box">
+
+        <video
+          controls
+          muted
+          loop
+          playsinline
+        >
+          <source
+            src="https://videos.pexels.com/video-files/15187012/15187012-uhd_3840_2160_30fps.mp4"
+            type="video/mp4"
+          >
+        </video>
+
+        <div class="video-info">
+          <h3>Ocean Cargo</h3>
+          <p>Container shipping and port operations.</p>
+        </div>
+
+      </div>
 
 
-<div class="video-card">
+      <div class="video-box">
 
-<video
-  autoplay
-  muted
-  loop
-  playsinline
-  controls
-  poster="https://images.unsplash.com/photo-1774929108070-b60d3879e071?auto=format&fit=crop&fm=jpg&q=80&w=1800"
->
+        <video
+          controls
+          muted
+          loop
+          playsinline
+        >
+          <source
+            src="https://videos.pexels.com/video-files/34484775/14612569_1080_1920_30fps.mp4"
+            type="video/mp4"
+          >
+        </video>
 
-<source
-  src="https://videos.pexels.com/video-files/15187012/15187012-uhd_3840_2160_30fps.mp4"
-  type="video/mp4"
->
+        <div class="video-info">
+          <h3>Road Logistics</h3>
+          <p>Freight trucks moving across highways.</p>
+        </div>
 
-</video>
-
-<div class="video-label">
-
-<h3>
-Global Sea Freight
-</h3>
-
-<p>
-Container ships and international port operations.
-</p>
-
-</div>
-
-</div>
+      </div>
 
 
-<div class="video-card small">
+      <div class="video-box">
 
-<video
-  autoplay
-  muted
-  loop
-  playsinline
-  controls
-  poster="https://images.unsplash.com/photo-1774929107123-dd8309c1c645?auto=format&fit=crop&fm=jpg&q=80&w=1200"
->
+        <video
+          controls
+          muted
+          loop
+          playsinline
+        >
+          <source
+            src="https://videos.pexels.com/video-files/12480130/12480130-hd_1080_1920_60fps.mp4"
+            type="video/mp4"
+          >
+        </video>
 
-<source
-  src="https://videos.pexels.com/video-files/34484775/14612569_1080_1920_30fps.mp4"
-  type="video/mp4"
->
+        <div class="video-info">
+          <h3>Vehicle Movement</h3>
+          <p>Cars and trucks moving through transport networks.</p>
+        </div>
 
-</video>
+      </div>
 
-<div class="video-label">
+    </div>
 
-<h3>
-Road Freight
-</h3>
-
-<p>
-Trucks moving cargo through transport networks.
-</p>
-
-</div>
-
-</div>
-
-
-<div class="video-card small">
-
-<video
-  autoplay
-  muted
-  loop
-  playsinline
-  controls
->
-
-<source
-  src="https://videos.pexels.com/video-files/12480130/12480130-hd_1080_1920_60fps.mp4"
-  type="video/mp4"
->
-
-</video>
-
-<div class="video-label">
-
-<h3>
-Transport Network
-</h3>
-
-<p>
-Road traffic, trucks and connected movement.
-</p>
-
-</div>
-
-</div>
-
-
-</div>
-
-</div>
+  </div>
 
 </section>
 
 
+<!-- ================= IMAGE GALLERY ================= -->
 
-<!-- =========================
-     PHOTO GALLERY
-========================= -->
+<section>
 
-<section class="section">
+  <div class="container">
 
-<div class="section-inner">
+    <div class="section-title">
 
-<div class="section-heading">
+      <span>Global Movement</span>
 
-<div class="eyebrow">
-Global Movement
-</div>
+      <h2>Built around real-world logistics</h2>
 
-<h2>
-Built around real-world logistics.
-</h2>
+      <p>
+        From ports and containers to trucks and road networks.
+      </p>
 
-<p>
-From container terminals to road transport,
-every shipment depends on a connected network.
-</p>
-
-</div>
+    </div>
 
 
-<div class="gallery">
+    <div class="gallery">
 
+      <img
+        src="https://images.unsplash.com/photo-1774929108070-b60d3879e071?auto=format&fit=crop&fm=jpg&q=85&w=1600"
+        alt="Cargo ship loaded with containers"
+      >
 
-<img
-  class="large"
-  src="https://images.unsplash.com/photo-1774929108070-b60d3879e071?auto=format&fit=crop&fm=jpg&q=80&w=1600"
-  alt="Cargo ship at port"
-  loading="lazy"
->
+      <img
+        src="https://images.unsplash.com/photo-1774929107123-dd8309c1c645?auto=format&fit=crop&fm=jpg&q=85&w=1600"
+        alt="Truck transporting shipping container"
+      >
 
+      <img
+        src="https://images.unsplash.com/photo-1774929107410-9cb5fb83fea6?auto=format&fit=crop&fm=jpg&q=85&w=1600"
+        alt="Shipping containers at port"
+      >
 
-<img
-  src="https://images.unsplash.com/photo-1774929107123-dd8309c1c645?auto=format&fit=crop&fm=jpg&q=80&w=1000"
-  alt="Container truck at port"
-  loading="lazy"
->
+      <img
+        src="https://images.unsplash.com/photo-1774929108070-b60d3879e071?auto=format&fit=crop&fm=jpg&q=85&w=1600"
+        alt="Container vessel"
+      >
 
+    </div>
 
-<img
-  src="https://images.unsplash.com/photo-1774929107410-9cb5fb83fea6?auto=format&fit=crop&fm=jpg&q=80&w=1000"
-  alt="Shipping containers and trucks"
-  loading="lazy"
->
-
-
-<img
-  src="https://images.unsplash.com/photo-1774929107410-9cb5fb83fea6?auto=format&fit=crop&fm=jpg&q=80&w=1200"
-  alt="Port logistics"
-  loading="lazy"
->
-
-
-<img
-  src="https://images.unsplash.com/photo-1774929107123-dd8309c1c645?auto=format&fit=crop&fm=jpg&q=80&w=1200"
-  alt="Freight transportation"
-  loading="lazy"
->
-
-
-</div>
-
-</div>
+  </div>
 
 </section>
 
 
+<!-- ================= ABOUT ================= -->
 
-<!-- =========================
-     ABOUT
-========================= -->
+<section class="about" id="about">
 
-<section
-  class="section"
-  id="about"
->
+  <div class="container">
 
-<div class="section-inner">
+    <div class="about-grid">
 
-<div class="about-grid">
+      <div>
 
+        <span
+          style="
+            color:#087ff5;
+            font-size:12px;
+            font-weight:800;
+            letter-spacing:1.5px;
+            text-transform:uppercase;
+          "
+        >
+          About UNEX
+        </span>
 
-<div class="about-image">
+        <h2>
+          Logistics with a clear view of the journey.
+        </h2>
 
-<img
-  src="https://images.unsplash.com/photo-1774929107410-9cb5fb83fea6?auto=format&fit=crop&fm=jpg&q=80&w=1400"
-  alt="UNEX logistics port operations"
-  loading="lazy"
->
+        <p>
+          UNEX Global Logistics is built around a simple idea:
+          make transportation easier to understand and easier
+          to track.
+        </p>
 
-
-<div class="about-badge">
-
-<strong>
-UNEX
-</strong>
-
-Global Logistics
-
-</div>
-
-</div>
-
-
-<div class="about-content">
-
-<div class="eyebrow">
-About UNEX
-</div>
-
-<h2>
-A modern approach to global logistics.
-</h2>
-
-<p>
-UNEX Global Logistics is focused on making
-freight movement clearer, more organized and
-easier to track.
-</p>
-
-<p>
-Our logistics approach brings together
-shipping, transportation and shipment
-visibility in one professional experience.
-</p>
+        <p>
+          Our digital platform gives customers a straightforward
+          way to follow shipment progress while connecting
+          logistics operations across different modes of transport.
+        </p>
 
 
-<ul class="about-list">
+        <div class="about-list">
 
-<li>
-Clear shipment tracking
-</li>
+          <div>
+            <span class="check">✓</span>
+            Shipment visibility
+          </div>
 
-<li>
-International freight solutions
-</li>
+          <div>
+            <span class="check">✓</span>
+            Freight coordination
+          </div>
 
-<li>
-Sea and road transportation
-</li>
+          <div>
+            <span class="check">✓</span>
+            Vehicle transportation
+          </div>
 
-<li>
-Professional customer communication
-</li>
+          <div>
+            <span class="check">✓</span>
+            International logistics
+          </div>
 
-<li>
-Flexible logistics support
-</li>
+        </div>
 
-</ul>
+      </div>
 
-</div>
 
-</div>
+      <div class="about-visual">
 
-</div>
+        <div class="route-box">
+
+          <strong>GLOBAL LOGISTICS NETWORK</strong>
+
+          <div class="route-line"></div>
+
+          <small>
+            Origin &nbsp; • &nbsp; Transit &nbsp; • &nbsp; Destination
+          </small>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
 
 </section>
 
 
+<!-- ================= CTA ================= -->
 
-<!-- =========================
-     CLIENT EXPERIENCE
-========================= -->
+<section class="cta">
 
-<section
-  class="section experience"
->
+  <div class="container">
 
-<div class="section-inner">
+    <h2>Ready to track your shipment?</h2>
 
-<div class="section-heading">
+    <p>
+      Enter your UNEX tracking number and view
+      your shipment journey.
+    </p>
 
-<div class="eyebrow">
-Client Experience
-</div>
+    <a href="#tracking" class="btn btn-light">
+      Track Shipment
+    </a>
 
-<h2>
-Professional service starts with clear communication.
-</h2>
-
-<p>
-Every shipment deserves visibility, communication
-and a straightforward logistics experience.
-</p>
-
-</div>
-
-
-<div class="review-grid">
-
-
-<div class="review-card">
-
-<div class="stars">
-★★★★★
-</div>
-
-<p>
-“Clear shipment updates and straightforward
-communication are at the heart of a good
-logistics experience.”
-</p>
-
-<div class="review-author">
-
-<div class="author-dot"></div>
-
-<div>
-
-<strong>
-UNEX Service Standard
-</strong>
-
-<span>
-Shipment visibility
-</span>
-
-</div>
-
-</div>
-
-</div>
-
-
-<div class="review-card">
-
-<div class="stars">
-★★★★★
-</div>
-
-<p>
-“From pickup to destination, organized
-information helps customers stay confident
-about their cargo.”
-</p>
-
-<div class="review-author">
-
-<div class="author-dot"></div>
-
-<div>
-
-<strong>
-UNEX Service Standard
-</strong>
-
-<span>
-Customer communication
-</span>
-
-</div>
-
-</div>
-
-</div>
-
-
-<div class="review-card">
-
-<div class="stars">
-★★★★★
-</div>
-
-<p>
-“Reliable logistics is about connecting people,
-cargo and information at every stage of the
-journey.”
-</p>
-
-<div class="review-author">
-
-<div class="author-dot"></div>
-
-<div>
-
-<strong>
-UNEX Service Standard
-</strong>
-
-<span>
-Logistics support
-</span>
-
-</div>
-
-</div>
-
-</div>
-
-
-</div>
-
-</div>
+  </div>
 
 </section>
 
 
-
-<!-- =========================
-     CTA
-========================= -->
-
-<section
-  class="cta"
-  id="contact"
->
-
-<h2>
-Ready to move your cargo?
-</h2>
-
-<p>
-Talk to UNEX Global Logistics about your
-shipping and transportation requirements.
-</p>
-
-
-<div class="hero-buttons">
-
-<a
-  href="mailto:info@unexgloballogistics.com"
-  class="btn btn-primary"
->
-  Request a Quote
-</a>
-
-<a
-  href="tracking.html"
-  class="btn btn-outline"
->
-  Track Shipment
-</a>
-
-</div>
-
-</section>
-
-
-
-<!-- =========================
-     FOOTER
-========================= -->
+<!-- ================= FOOTER ================= -->
 
 <footer>
 
-<div class="footer-grid">
+  <div class="footer-grid">
+
+    <div>
+
+      <h3>UNEX Global Logistics</h3>
+
+      <p>
+        Global shipping, freight and transportation
+        coordination.
+      </p>
+
+      <p style="margin-top:10px;">
+        @unexgloballogistics
+      </p>
+
+    </div>
 
 
-<div class="footer-brand">
+    <div>
 
-<h3>
-UNEX<span>GLOBAL</span>
-</h3>
+      <h3>Quick Links</h3>
 
-<p>
-UNEX Global Logistics — connecting cargo,
-transport and global trade through modern
-logistics solutions.
-</p>
+      <p><a href="#home">Home</a></p>
+      <p><a href="#services">Services</a></p>
+      <p><a href="#tracking">Tracking</a></p>
+      <p><a href="#about">About</a></p>
 
-</div>
+    </div>
 
 
-<div>
+    <div>
 
-<h4>
-Navigation
-</h4>
+      <h3>Services</h3>
 
-<a href="#services">
-Services
-</a>
+      <p>Ocean Freight</p>
+      <p>Road Freight</p>
+      <p>Vehicle Transport</p>
+      <p>Global Logistics</p>
 
-<a href="#about">
-About
-</a>
+    </div>
 
-<a href="#media">
-Media
-</a>
-
-<a href="tracking.html">
-Track Shipment
-</a>
-
-</div>
+  </div>
 
 
-<div>
-
-<h4>
-Services
-</h4>
-
-<a href="#services">
-Ocean Freight
-</a>
-
-<a href="#services">
-Road Transport
-</a>
-
-<a href="#services">
-Air Freight
-</a>
-
-<a href="#services">
-Freight Forwarding
-</a>
-
-</div>
-
-
-<div>
-
-<h4>
-Contact
-</h4>
-
-<a href="mailto:info@unexgloballogistics.com">
-Email Us
-</a>
-
-<a href="#contact">
-Request a Quote
-</a>
-
-<a href="tracking.html">
-Shipment Tracking
-</a>
-
-</div>
-
-
-</div>
-
-
-<div class="footer-bottom">
-
-<span>
-© 2026 UNEX Global Logistics.
-All rights reserved.
-</span>
-
-<span>
-unexgloballogistics
-</span>
-
-</div>
+  <div class="footer-bottom">
+    © 2026 UNEX Global Logistics. All rights reserved.
+  </div>
 
 </footer>
 
 
+<!-- ================= JAVASCRIPT ================= -->
 
 <script>
 
-/* =========================
-   SHIPMENT TRACKING
-========================= */
+  function trackShipment() {
 
-function trackShipment(){
+    const trackingInput =
+      document.getElementById("trackingNumber");
 
-  const input =
-    document
-      .getElementById("trackingInput");
+    const tracking =
+      trackingInput.value.trim();
 
-  const number =
-    input.value.trim();
+    if (!tracking) {
+      alert("Please enter your tracking number.");
+      trackingInput.focus();
+      return;
+    }
 
-  if(!number){
-
-    alert(
-      "Please enter a tracking number."
-    );
-
-    input.focus();
-
-    return;
+    window.location.href =
+      "tracking.html?tracking=" +
+      encodeURIComponent(tracking);
   }
 
 
-  window.location.href =
-    "tracking.html?tracking=" +
-    encodeURIComponent(number);
+  document
+    .getElementById("trackingNumber")
+    .addEventListener("keydown", function(event) {
 
-}
-
-
-/* ENTER KEY */
-
-document
-  .getElementById("trackingInput")
-  .addEventListener(
-    "keydown",
-    function(event){
-
-      if(event.key === "Enter"){
-
+      if (event.key === "Enter") {
         trackShipment();
-
       }
 
-    }
-  );
-
-
-/* =========================
-   VIDEO FALLBACK
-========================= */
-
-document
-  .querySelectorAll("video")
-  .forEach(function(video){
-
-    video.addEventListener(
-      "error",
-      function(){
-
-        console.log(
-          "Video could not be loaded."
-        );
-
-      }
-    );
-
-  });
+    });
 
 </script>
-
 
 </body>
 </html>
