@@ -1,11 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Shipment Tracking - UNEX Global Logistics</title>
+
+<meta
+name="viewport"
+content="width=device-width, initial-scale=1.0"
+>
+
+<title>
+Shipment Tracking - UNEX Global Logistics
+</title>
 
 <style>
+
 body{
 font-family:Arial,sans-serif;
 background:#f4f7fb;
@@ -53,6 +63,64 @@ font-size:17px;
 .info strong{
 color:#0A3D91;
 }
+
+
+/* CUSTOMER UPDATE */
+
+.customer-update{
+
+background:#eef7ff;
+
+border:1px solid #cce5ff;
+
+border-left:5px solid #087ff5;
+
+padding:18px;
+
+border-radius:10px;
+
+margin:22px 0;
+
+}
+
+.customer-update-label{
+
+font-size:12px;
+
+font-weight:bold;
+
+color:#087ff5;
+
+text-transform:uppercase;
+
+letter-spacing:1px;
+
+margin-bottom:7px;
+
+}
+
+.customer-update-message{
+
+font-size:16px;
+
+font-weight:600;
+
+color:#19344d;
+
+line-height:1.6;
+
+}
+
+.customer-update-date{
+
+font-size:12px;
+
+color:#788896;
+
+margin-top:9px;
+
+}
+
 
 /* TIMELINE */
 
@@ -145,19 +213,30 @@ text-align:center;
 color:#666;
 padding:20px;
 }
+
 </style>
+
 </head>
+
 
 <body>
 
+
 <div class="container">
 
-<h1>Shipment Tracking</h1>
+<h1>
+Shipment Tracking
+</h1>
+
 
 <div class="tracking-number">
+
 Tracking Number:
+
 <strong id="trackingNo"></strong>
+
 </div>
+
 
 <div id="shipmentContent">
 
@@ -167,16 +246,24 @@ Loading shipment information...
 
 </div>
 
+
 <button onclick="history.back()">
 Back
 </button>
+
 
 </div>
 
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
+
 <script>
+
+
+/* =========================
+SUPABASE
+========================= */
 
 const SUPABASE_URL =
 "https://kwmverimbcosdshjvshc.supabase.co";
@@ -192,29 +279,38 @@ SUPABASE_PUBLISHABLE_KEY
 
 
 /* =========================
-   LOAD SHIPMENT
+LOAD SHIPMENT
 ========================= */
 
 async function loadShipment(){
 
 const params =
-new URLSearchParams(window.location.search);
+new URLSearchParams(
+window.location.search
+);
 
 const number =
-(params.get("tracking") || "").trim();
+(params.get("tracking") || "")
+.trim();
 
 
-document.getElementById("trackingNo")
-.textContent = number;
+document.getElementById(
+"trackingNo"
+).textContent=number;
 
 
 if(!number){
 
-document.getElementById("shipmentContent")
-.innerHTML = `
+document.getElementById(
+"shipmentContent"
+).innerHTML=`
+
 <div class="not-found">
+
 Please enter a tracking number.
+
 </div>
+
 `;
 
 return;
@@ -223,28 +319,42 @@ return;
 
 
 /* =========================
-   GET SHIPMENT
+GET SHIPMENT
 ========================= */
 
-const { data, error } =
+const {
+data,
+error
+} =
 await supabaseClient
 .from("shipments")
 .select(
 "Tracking, Origin, Destination, Status, delivery"
 )
-.eq("Tracking", number)
+.eq(
+"Tracking",
+number
+)
 .maybeSingle();
 
 
 if(error){
 
-console.error("Shipment error:", error);
+console.error(
+"Shipment error:",
+error
+);
 
-document.getElementById("shipmentContent")
-.innerHTML = `
+document.getElementById(
+"shipmentContent"
+).innerHTML=`
+
 <div class="not-found">
+
 Unable to retrieve shipment information.
+
 </div>
+
 `;
 
 return;
@@ -254,11 +364,16 @@ return;
 
 if(!data){
 
-document.getElementById("shipmentContent")
-.innerHTML = `
+document.getElementById(
+"shipmentContent"
+).innerHTML=`
+
 <div class="not-found">
+
 Shipment not found.
+
 </div>
+
 `;
 
 return;
@@ -267,10 +382,11 @@ return;
 
 
 /* =========================
-   GET SHIPMENT HISTORY
+GET HISTORY
 ========================= */
 
-let history = null;
+let history=null;
+
 
 const historyResult =
 await supabaseClient
@@ -278,16 +394,22 @@ await supabaseClient
 .select(
 "status, note, created_at"
 )
-.eq("tracking", number)
+.eq(
+"tracking",
+number
+)
 .order(
 "created_at",
-{ ascending: true }
+{
+ascending:true
+}
 );
 
 
 if(!historyResult.error){
 
-history = historyResult.data;
+history=
+historyResult.data;
 
 }else{
 
@@ -300,11 +422,13 @@ historyResult.error.message
 
 
 /* =========================
-   CURRENT STATUS
+CURRENT STATUS
 ========================= */
 
 const status =
-data.Status || "Shipment Created";
+data.Status ||
+"Shipment Created";
+
 
 const statusLower =
 status.toLowerCase();
@@ -334,28 +458,49 @@ statusLower.includes("delivered");
 
 
 /* =========================
-   TIMELINE
+LATEST CUSTOMER UPDATE
 ========================= */
 
-let timelineHTML = "";
+let latestUpdate=null;
 
 
 /*
-If real history exists,
-show the real history.
+The last history item becomes
+the customer's latest update.
 */
 
-if(history && history.length > 0){
+if(
+history &&
+history.length>0
+){
+
+latestUpdate =
+history[history.length-1];
+
+}
+
+
+/* =========================
+TIMELINE
+========================= */
+
+let timelineHTML="";
+
+
+if(
+history &&
+history.length>0
+){
 
 timelineHTML =
-history.map(item => {
+history.map(item=>{
 
 const date =
 item.created_at
 ? new Date(
 item.created_at
 ).toLocaleString()
-: "";
+:"";
 
 
 return `
@@ -365,21 +510,27 @@ return `
 <div class="timeline-dot"></div>
 
 <div class="timeline-date">
+
 ${escapeHtml(date)}
+
 </div>
 
 <div class="timeline-location">
+
 ${escapeHtml(
 item.status ||
 "Shipment Update"
 )}
+
 </div>
 
 <div class="timeline-update">
+
 ${escapeHtml(
 item.note ||
 "Shipment status updated."
 )}
+
 </div>
 
 </div>
@@ -391,14 +542,13 @@ item.note ||
 }
 
 
-/*
-If there is no history,
-use the original professional timeline.
-*/
+/* =========================
+FALLBACK TIMELINE
+========================= */
 
 else{
 
-timelineHTML = `
+timelineHTML=`
 
 <div class="timeline-item active">
 
@@ -508,35 +658,113 @@ Shipment has been delivered successfully.
 
 
 /* =========================
-   DISPLAY SHIPMENT
+CUSTOMER UPDATE HTML
 ========================= */
 
-document.getElementById("shipmentContent")
-.innerHTML = `
+let customerUpdateHTML="";
+
+
+if(latestUpdate){
+
+const updateDate =
+latestUpdate.created_at
+? new Date(
+latestUpdate.created_at
+).toLocaleString()
+:"";
+
+
+customerUpdateHTML=`
+
+<div class="customer-update">
+
+<div class="customer-update-label">
+
+Latest Shipment Update
+
+</div>
+
+
+<div class="customer-update-message">
+
+${escapeHtml(
+latestUpdate.note ||
+"Your shipment status has been updated."
+)}
+
+</div>
+
+
+<div class="customer-update-date">
+
+Updated ${escapeHtml(updateDate)}
+
+</div>
+
+</div>
+
+`;
+
+}
+
+
+/* =========================
+DISPLAY
+========================= */
+
+document.getElementById(
+"shipmentContent"
+).innerHTML=`
 
 <div class="status">
-Status: ${escapeHtml(status)}
+
+Status:
+${escapeHtml(status)}
+
 </div>
 
+
 <div class="info">
+
 <strong>Origin:</strong>
-${escapeHtml(data.Origin || "—")}
+
+${escapeHtml(
+data.Origin || "—"
+)}
+
 </div>
 
+
 <div class="info">
+
 <strong>Destination:</strong>
-${escapeHtml(data.Destination || "—")}
+
+${escapeHtml(
+data.Destination || "—"
+)}
+
 </div>
 
+
 <div class="info">
+
 <strong>Estimated Delivery:</strong>
-${escapeHtml(data.delivery || "—")}
+
+${escapeHtml(
+data.delivery || "—"
+)}
+
 </div>
+
+
+${customerUpdateHTML}
 
 
 <div class="timeline">
 
-<h2>Shipment Progress</h2>
+<h2>
+Shipment Progress
+</h2>
 
 ${timelineHTML}
 
@@ -548,30 +776,52 @@ ${timelineHTML}
 
 
 /* =========================
-   SECURITY
+SECURITY
 ========================= */
 
 function escapeHtml(value){
 
-if(value === null ||
-value === undefined){
+if(
+value===null ||
+value===undefined
+){
 
 return "";
 
 }
 
 return String(value)
-.replace(/&/g,"&amp;")
-.replace(/</g,"&lt;")
-.replace(/>/g,"&gt;")
-.replace(/"/g,"&quot;")
-.replace(/'/g,"&#039;");
+
+.replace(
+/&/g,
+"&amp;"
+)
+
+.replace(
+/</g,
+"&lt;"
+)
+
+.replace(
+/>/g,
+"&gt;"
+)
+
+.replace(
+/"/g,
+"&quot;"
+)
+
+.replace(
+/'/g,
+"&#039;"
+);
 
 }
 
 
 /* =========================
-   START
+START
 ========================= */
 
 loadShipment();
@@ -579,4 +829,5 @@ loadShipment();
 </script>
 
 </body>
+
 </html>
