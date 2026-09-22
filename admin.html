@@ -3,7 +3,6 @@
 <head>
 
 <meta charset="UTF-8">
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>UNEX Global Logistics - Admin</title>
@@ -12,153 +11,177 @@
 
 <style>
 
-body {
-  font-family: Arial, sans-serif;
-  background: #f4f7fb;
-  margin: 0;
-  padding: 20px;
+body{
+font-family:Arial,sans-serif;
+background:#f4f7fb;
+margin:0;
+padding:20px;
 }
 
-.container {
-  max-width: 700px;
-  margin: auto;
+.container{
+max-width:700px;
+margin:auto;
 }
 
-.card {
-  background: white;
-  padding: 25px;
-  border-radius: 12px;
-  margin-bottom: 20px;
-  box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+.card{
+background:white;
+padding:25px;
+border-radius:12px;
+margin-bottom:20px;
+box-shadow:0 3px 12px rgba(0,0,0,.08);
 }
 
-h1,
-h2 {
-  margin-top: 0;
+h1,h2{
+margin-top:0;
 }
 
-input,
-select {
-  width: 100%;
-  padding: 12px;
-  margin: 8px 0 15px;
-  box-sizing: border-box;
-  border: 1px solid #ccc;
-  border-radius: 7px;
-  font-size: 16px;
+input,select,textarea{
+width:100%;
+padding:12px;
+margin:8px 0 15px;
+box-sizing:border-box;
+border:1px solid #ccc;
+border-radius:7px;
+font-size:16px;
+font-family:Arial,sans-serif;
 }
 
-button {
-  padding: 12px 18px;
-  border: none;
-  border-radius: 7px;
-  cursor: pointer;
-  font-size: 16px;
-  margin-right: 8px;
-  margin-top: 5px;
+textarea{
+min-height:110px;
+resize:vertical;
 }
 
-button:hover {
-  opacity: 0.9;
+button{
+padding:12px 18px;
+border:none;
+border-radius:7px;
+cursor:pointer;
+font-size:16px;
+margin-right:8px;
+margin-top:5px;
 }
 
-.primary {
-  background: #0b63ce;
-  color: white;
-  width: 100%;
+button:hover{
+opacity:.9;
 }
 
-.edit {
-  background: #f0ad00;
-  color: white;
+.primary{
+background:#0b63ce;
+color:white;
+width:100%;
 }
 
-.delete {
-  background: #d93025;
-  color: white;
+.edit{
+background:#f0ad00;
+color:white;
 }
 
-.history-button {
-  background: #0A3D91;
-  color: white;
+.delete{
+background:#d93025;
+color:white;
 }
 
-.logout {
-  background: #555;
-  color: white;
-  width: 100%;
-  margin-top: 15px;
+.history-button{
+background:#0A3D91;
+color:white;
 }
 
-.shipment {
-  border: 1px solid #ddd;
-  padding: 15px;
-  margin: 12px 0;
-  border-radius: 10px;
-  background: #fafafa;
+.logout{
+background:#555;
+color:white;
+width:100%;
+margin-top:15px;
 }
 
-.history {
-  margin-top: 15px;
-  padding: 15px;
-  background: #ffffff;
-  border: 1px solid #dfe3e8;
-  border-radius: 8px;
+.shipment{
+border:1px solid #ddd;
+padding:15px;
+margin:12px 0;
+border-radius:10px;
+background:#fafafa;
 }
 
-.history-title {
-  font-weight: bold;
-  color: #0A3D91;
-  margin-bottom: 12px;
+.history{
+margin-top:15px;
+padding:15px;
+background:#fff;
+border:1px solid #dfe3e8;
+border-radius:8px;
 }
 
-.history-item {
-  border-left: 3px solid #22a447;
-  padding-left: 12px;
-  margin-bottom: 15px;
+.history-title{
+font-weight:bold;
+color:#0A3D91;
+margin-bottom:12px;
 }
 
-.history-item:last-child {
-  margin-bottom: 0;
+.history-item{
+border-left:3px solid #22a447;
+padding-left:12px;
+margin-bottom:15px;
 }
 
-.history-date {
-  font-size: 13px;
-  color: #777;
-  margin-bottom: 4px;
+.history-item:last-child{
+margin-bottom:0;
 }
 
-.history-status {
-  font-weight: bold;
-  color: #0A3D91;
-  font-size: 16px;
+.history-date{
+font-size:13px;
+color:#777;
+margin-bottom:4px;
 }
 
-.history-note {
-  margin-top: 4px;
-  font-size: 14px;
-  color: #444;
+.history-status{
+font-weight:bold;
+color:#0A3D91;
+font-size:16px;
 }
 
-.history-loading {
-  color: #666;
-  padding: 8px 0;
+.history-note{
+margin-top:4px;
+font-size:14px;
+color:#444;
 }
 
-.history-error {
-  color: #b00000;
-  background: #fff0f0;
-  padding: 10px;
-  border-radius: 6px;
+.history-loading{
+color:#666;
+padding:8px 0;
 }
 
-#output {
-  margin-top: 15px;
-  font-weight: bold;
+.history-error{
+color:#b00000;
+background:#fff0f0;
+padding:10px;
+border-radius:6px;
 }
 
-.hidden {
-  display: none;
+.customer-box{
+background:#eef7ff;
+border-left:4px solid #087ff5;
+padding:14px;
+border-radius:7px;
+margin-top:5px;
+margin-bottom:15px;
+}
+
+.customer-box strong{
+display:block;
+color:#0A3D91;
+margin-bottom:4px;
+}
+
+.customer-box span{
+font-size:13px;
+color:#526170;
+}
+
+#output{
+margin-top:15px;
+font-weight:bold;
+}
+
+.hidden{
+display:none;
 }
 
 </style>
@@ -170,163 +193,177 @@ button:hover {
 <div class="container">
 
 
-<!-- =========================
-     LOGIN
-========================= -->
+<!-- LOGIN -->
 
 <div id="loginCard" class="card">
 
-  <h1>UNEX Admin</h1>
+<h1>UNEX Admin</h1>
 
-  <p>Login to manage shipments.</p>
+<p>Login to manage shipments.</p>
 
-  <label>Email</label>
+<label>Email</label>
 
-  <input
-    type="email"
-    id="email"
-    placeholder="Admin email"
-  >
+<input
+type="email"
+id="email"
+placeholder="Admin email"
+>
 
-  <label>Password</label>
+<label>Password</label>
 
-  <input
-    type="password"
-    id="password"
-    placeholder="Password"
-  >
+<input
+type="password"
+id="password"
+placeholder="Password"
+>
 
-  <button
-    class="primary"
-    onclick="loginAdmin()"
-  >
-    Login
-  </button>
+<button
+class="primary"
+onclick="loginAdmin()"
+>
+Login
+</button>
 
-  <div id="loginMessage"></div>
+<div id="loginMessage"></div>
 
 </div>
 
 
-<!-- =========================
-     ADMIN AREA
-========================= -->
+<!-- ADMIN -->
 
 <div id="adminArea" class="hidden">
 
 
-<!-- =========================
-     SHIPMENT FORM
-========================= -->
+<!-- SHIPMENT FORM -->
 
 <div class="card">
 
-  <h2>Manage Shipment</h2>
+<h2>Manage Shipment</h2>
 
-  <input
-    type="hidden"
-    id="editingId"
-  >
+<input
+type="hidden"
+id="editingId"
+>
 
-  <label>Tracking Number</label>
+<label>Tracking Number</label>
 
-  <input
-    type="text"
-    id="tracking"
-    placeholder="Example: UNEX22541"
-  >
-
-
-  <label>Origin</label>
-
-  <input
-    type="text"
-    id="origin"
-    placeholder="Example: New York"
-  >
+<input
+type="text"
+id="tracking"
+placeholder="Example: UNEX22541"
+>
 
 
-  <label>Destination</label>
+<label>Origin</label>
 
-  <input
-    type="text"
-    id="destination"
-    placeholder="Example: Germany"
-  >
-
-
-  <label>Status</label>
-
-  <select id="status">
-
-    <option value="Shipment Created">
-      Shipment Created
-    </option>
-
-    <option value="In Transit">
-      In Transit
-    </option>
-
-    <option value="Arrived at Facility">
-      Arrived at Facility
-    </option>
-
-    <option value="Held at Customs">
-      Held at Customs
-    </option>
-
-    <option value="Out for Delivery">
-      Out for Delivery
-    </option>
-
-    <option value="Delivered">
-      Delivered
-    </option>
-
-  </select>
+<input
+type="text"
+id="origin"
+placeholder="Example: New York"
+>
 
 
-  <label>Estimated Delivery</label>
+<label>Destination</label>
 
-  <input
-    type="text"
-    id="delivery"
-    placeholder="Example: 03/04/2026"
-  >
-
-
-  <button
-    class="primary"
-    onclick="saveShipment()"
-  >
-    Save Shipment
-  </button>
+<input
+type="text"
+id="destination"
+placeholder="Example: Germany"
+>
 
 
-  <button
-    class="logout"
-    onclick="logoutAdmin()"
-  >
-    Logout
-  </button>
+<label>Status</label>
+
+<select id="status">
+
+<option value="Shipment Created">
+Shipment Created
+</option>
+
+<option value="In Transit">
+In Transit
+</option>
+
+<option value="Arrived at Facility">
+Arrived at Facility
+</option>
+
+<option value="Held at Customs">
+Held at Customs
+</option>
+
+<option value="Out for Delivery">
+Out for Delivery
+</option>
+
+<option value="Delivered">
+Delivered
+</option>
+
+</select>
 
 
-  <div id="output"></div>
+<label>Estimated Delivery</label>
+
+<input
+type="text"
+id="delivery"
+placeholder="Example: 03/04/2026"
+>
+
+
+<!-- CUSTOMER MESSAGE -->
+
+<label>
+Customer Update Message
+</label>
+
+<textarea
+id="customerMessage"
+placeholder="Example: Your shipment has departed the origin facility and is now in transit."
+></textarea>
+
+<div class="customer-box">
+
+<strong>Customer communication</strong>
+
+<span>
+This message will appear on the customer's tracking page as their latest shipment update.
+</span>
 
 </div>
 
 
-<!-- =========================
-     EXISTING SHIPMENTS
-========================= -->
+<button
+class="primary"
+onclick="saveShipment()"
+>
+Save Shipment
+</button>
+
+
+<button
+class="logout"
+onclick="logoutAdmin()"
+>
+Logout
+</button>
+
+
+<div id="output"></div>
+
+</div>
+
+
+<!-- EXISTING SHIPMENTS -->
 
 <div class="card">
 
-  <h2>Existing Shipments</h2>
+<h2>Existing Shipments</h2>
 
-  <div id="shipmentList">
-    Loading shipments...
-  </div>
+<div id="shipmentList">
+Loading shipments...
+</div>
 
 </div>
 
@@ -339,1029 +376,968 @@ button:hover {
 
 
 /* =========================
-   SUPABASE
+SUPABASE
 ========================= */
 
 const SUPABASE_URL =
-  "https://kwmverimbcosdshjvshc.supabase.co";
-
+"https://kwmverimbcosdshjvshc.supabase.co";
 
 const SUPABASE_PUBLISHABLE_KEY =
-  "sb_publishable_Y_9BOh5Hmb-Zf-rrflPKzw_WV9_Rd5A";
-
+"sb_publishable_Y_9BOh5Hmb-Zf-rrflPKzw_WV9_Rd5A";
 
 const supabaseClient =
-  window.supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_PUBLISHABLE_KEY
-  );
+window.supabase.createClient(
+SUPABASE_URL,
+SUPABASE_PUBLISHABLE_KEY
+);
 
 
 /* =========================
-   LOGIN
+LOGIN
 ========================= */
 
-async function loginAdmin() {
+async function loginAdmin(){
 
-  const email =
-    document.getElementById("email")
-      .value
-      .trim();
+const email =
+document.getElementById("email")
+.value
+.trim();
 
+const password =
+document.getElementById("password")
+.value;
 
-  const password =
-    document.getElementById("password")
-      .value;
+const message =
+document.getElementById("loginMessage");
 
+if(!email || !password){
 
-  const message =
-    document.getElementById("loginMessage");
+message.textContent =
+"Please enter your email and password.";
 
+return;
 
-  if (!email || !password) {
+}
 
-    message.textContent =
-      "Please enter your email and password.";
+message.textContent =
+"Logging in...";
 
-    return;
-  }
+const {data,error} =
+await supabaseClient.auth
+.signInWithPassword({
 
+email:email,
 
-  message.textContent =
-    "Logging in...";
+password:password
 
+});
 
-  const { data, error } =
-    await supabaseClient.auth.signInWithPassword({
+if(error){
 
-      email: email,
+message.textContent =
+"Login failed: " +
+error.message;
 
-      password: password
+return;
 
-    });
+}
 
+if(!data.session){
 
-  if (error) {
+message.textContent =
+"Login failed. No session created.";
 
-    message.textContent =
-      "Login failed: " +
-      error.message;
+return;
 
-    return;
-  }
+}
 
+message.textContent="";
 
-  if (!data.session) {
+document.getElementById("loginCard")
+.classList.add("hidden");
 
-    message.textContent =
-      "Login failed. No session created.";
+document.getElementById("adminArea")
+.classList.remove("hidden");
 
-    return;
-  }
-
-
-  message.textContent = "";
-
-
-  document.getElementById("loginCard")
-    .classList.add("hidden");
-
-
-  document.getElementById("adminArea")
-    .classList.remove("hidden");
-
-
-  await loadShipments();
+await loadShipments();
 
 }
 
 
 /* =========================
-   LOGOUT
+LOGOUT
 ========================= */
 
-async function logoutAdmin() {
+async function logoutAdmin(){
 
-  await supabaseClient.auth.signOut();
+await supabaseClient.auth.signOut();
 
+document.getElementById("adminArea")
+.classList.add("hidden");
 
-  document.getElementById("adminArea")
-    .classList.add("hidden");
+document.getElementById("loginCard")
+.classList.remove("hidden");
 
+document.getElementById("shipmentList")
+.innerHTML="";
 
-  document.getElementById("loginCard")
-    .classList.remove("hidden");
+document.getElementById("output")
+.textContent="";
 
+document.getElementById("email")
+.value="";
 
-  document.getElementById("shipmentList")
-    .innerHTML = "";
-
-
-  document.getElementById("output")
-    .textContent = "";
-
-
-  document.getElementById("email")
-    .value = "";
-
-
-  document.getElementById("password")
-    .value = "";
+document.getElementById("password")
+.value="";
 
 }
 
 
 /* =========================
-   SAVE SHIPMENT
+SAVE SHIPMENT
 ========================= */
 
-async function saveShipment() {
+async function saveShipment(){
 
-  const editingId =
-    document.getElementById("editingId")
-      .value;
+const editingId =
+document.getElementById("editingId")
+.value;
 
+const tracking =
+document.getElementById("tracking")
+.value
+.trim();
 
-  const tracking =
-    document.getElementById("tracking")
-      .value
-      .trim();
+const origin =
+document.getElementById("origin")
+.value
+.trim();
 
+const destination =
+document.getElementById("destination")
+.value
+.trim();
 
-  const origin =
-    document.getElementById("origin")
-      .value
-      .trim();
+const status =
+document.getElementById("status")
+.value;
 
+const delivery =
+document.getElementById("delivery")
+.value
+.trim();
 
-  const destination =
-    document.getElementById("destination")
-      .value
-      .trim();
+const customerMessage =
+document.getElementById("customerMessage")
+.value
+.trim();
 
 
-  const status =
-    document.getElementById("status")
-      .value;
+if(!tracking){
 
+alert(
+"Please enter a tracking number."
+);
 
-  const delivery =
-    document.getElementById("delivery")
-      .value
-      .trim();
+return;
 
+}
 
-  if (!tracking) {
+if(!origin || !destination){
 
-    alert(
-      "Please enter a tracking number."
-    );
+alert(
+"Please enter the origin and destination."
+);
 
-    return;
-  }
+return;
 
+}
 
-  if (!origin || !destination) {
 
-    alert(
-      "Please enter the origin and destination."
-    );
+const shipment = {
 
-    return;
-  }
+Tracking:tracking,
 
+Origin:origin,
 
-  const shipment = {
+Destination:destination,
 
-    Tracking: tracking,
+Status:status,
 
-    Origin: origin,
+delivery:delivery
 
-    Destination: destination,
+};
 
-    Status: status,
 
-    delivery: delivery
+let oldStatus=null;
 
-  };
 
+/* =========================
+CHECK EXISTING
+========================= */
 
-  let oldStatus = null;
+if(editingId){
 
-  let oldTracking = tracking;
+const {
+data:existing,
+error:existingError
+} =
+await supabaseClient
+.from("shipments")
+.select(
+"Tracking, Status"
+)
+.eq("id",editingId)
+.maybeSingle();
 
+if(existingError){
 
-  /* =========================
-     CHECK EXISTING SHIPMENT
-  ========================= */
+alert(
+"Could not check existing shipment: " +
+existingError.message
+);
 
-  if (editingId) {
+return;
 
-    const {
-      data: existing,
-      error: existingError
-    } =
-      await supabaseClient
-        .from("shipments")
-        .select(
-          "Tracking, Status"
-        )
-        .eq("id", editingId)
-        .maybeSingle();
+}
 
+if(existing){
 
-    if (existingError) {
+oldStatus=existing.Status;
 
-      alert(
-        "Could not check existing shipment: " +
-        existingError.message
-      );
+}
 
-      return;
-    }
+}
 
+else{
 
-    if (existing) {
+const {
+data:existing,
+error:existingError
+} =
+await supabaseClient
+.from("shipments")
+.select(
+"Tracking, Status"
+)
+.eq("Tracking",tracking)
+.maybeSingle();
 
-      oldStatus =
-        existing.Status;
+if(existingError){
 
-      oldTracking =
-        existing.Tracking;
+alert(
+"Could not check existing shipment: " +
+existingError.message
+);
 
-    }
+return;
 
-  }
+}
 
-  else {
+if(existing){
 
-    const {
-      data: existing,
-      error: existingError
-    } =
-      await supabaseClient
-        .from("shipments")
-        .select(
-          "Tracking, Status"
-        )
-        .eq("Tracking", tracking)
-        .maybeSingle();
+oldStatus=existing.Status;
 
+}
 
-    if (existingError) {
+}
 
-      alert(
-        "Could not check existing shipment: " +
-        existingError.message
-      );
 
-      return;
-    }
+let result;
 
 
-    if (existing) {
+/* =========================
+EDIT
+========================= */
 
-      oldStatus =
-        existing.Status;
+if(editingId){
 
-      oldTracking =
-        existing.Tracking;
+result =
+await supabaseClient
+.from("shipments")
+.update(shipment)
+.eq("id",editingId)
+.select();
 
-    }
+}
 
-  }
+/* =========================
+CREATE
+========================= */
 
+else{
 
-  let result;
+result =
+await supabaseClient
+.from("shipments")
+.upsert(
+[shipment],
+{
+onConflict:"Tracking"
+}
+)
+.select();
 
+}
 
-  /* =========================
-     EDIT EXISTING
-  ========================= */
 
-  if (editingId) {
+if(result.error){
 
-    result =
-      await supabaseClient
-        .from("shipments")
-        .update(shipment)
-        .eq("id", editingId)
-        .select();
+alert(
+"Could not save shipment: " +
+result.error.message
+);
 
-  }
-
-
-  /* =========================
-     CREATE / UPDATE
-  ========================= */
-
-  else {
-
-    result =
-      await supabaseClient
-        .from("shipments")
-        .upsert(
-
-          [shipment],
-
-          {
-            onConflict: "Tracking"
-          }
-
-        )
-        .select();
-
-  }
-
-
-  if (result.error) {
-
-    alert(
-      "Could not save shipment: " +
-      result.error.message
-    );
-
-    return;
-  }
-
-
-  /* =========================
-     CREATE HISTORY
-  ========================= */
-
-  const shouldCreateHistory =
-    oldStatus === null ||
-    oldStatus !== status;
-
-
-  if (shouldCreateHistory) {
-
-    const historyRecord = {
-
-      tracking: tracking,
-
-      status: status,
-
-      note:
-        oldStatus === null
-
-          ? "Shipment created"
-
-          : "Shipment status updated from " +
-            oldStatus +
-            " to " +
-            status
-
-    };
-
-
-    const {
-      error: historyError
-    } =
-      await supabaseClient
-        .from("shipment_history")
-        .insert(
-          [historyRecord]
-        );
-
-
-    if (historyError) {
-
-      console.error(
-        "History error:",
-        historyError
-      );
-
-
-      document.getElementById("output")
-        .textContent =
-        "Shipment saved, but history could not be recorded.";
-
-    }
-
-    else {
-
-      document.getElementById("output")
-        .textContent =
-        editingId
-          ? "Shipment updated and history recorded!"
-          : "Shipment saved and history recorded!";
-
-    }
-
-  }
-
-  else {
-
-    document.getElementById("output")
-      .textContent =
-      editingId
-        ? "Shipment updated successfully!"
-        : "Shipment saved successfully!";
-
-  }
-
-
-  document.getElementById("editingId")
-    .value = "";
-
-
-  await loadShipments();
+return;
 
 }
 
 
 /* =========================
-   LOAD SHIPMENTS
+CREATE CUSTOMER UPDATE
 ========================= */
 
-async function loadShipments() {
-
-  const list =
-    document.getElementById(
-      "shipmentList"
-    );
+const statusChanged =
+oldStatus === null ||
+oldStatus !== status;
 
 
-  list.textContent =
-    "Loading shipments...";
+/*
+Create a history record when:
+
+1. Shipment is new
+2. Status changed
+3. Admin entered a customer message
+*/
+
+if(
+statusChanged ||
+customerMessage
+){
+
+let note="";
 
 
-  const {
-    data,
-    error
-  } =
-    await supabaseClient
-      .from("shipments")
-      .select(
-        "id, Tracking, Origin, Destination, Status, delivery"
-      )
-      .order(
-        "id",
-        {
-          ascending: false
-        }
-      );
+if(customerMessage){
+
+note=customerMessage;
+
+}
+
+else if(oldStatus===null){
+
+note="Shipment created";
+
+}
+
+else{
+
+note=
+"Shipment status updated from " +
+oldStatus +
+" to " +
+status;
+
+}
 
 
-  if (error) {
+const historyRecord={
 
-    list.textContent =
-      "Could not load shipments: " +
-      error.message;
+tracking:tracking,
 
-    return;
-  }
+status:status,
 
+note:note
 
-  if (!data ||
-      data.length === 0) {
-
-    list.textContent =
-      "No shipments yet.";
-
-    return;
-  }
+};
 
 
-  list.innerHTML =
-    data.map(
-      shipment => `
-
-      <div
-        class="shipment"
-        id="shipment-${shipment.id}"
-      >
-
-        <strong>
-          Tracking:
-        </strong>
-
-        ${escapeHtml(
-          shipment.Tracking
-        )}
-
-        <br>
+const {
+error:historyError
+} =
+await supabaseClient
+.from("shipment_history")
+.insert(
+[historyRecord]
+);
 
 
-        <strong>
-          Origin:
-        </strong>
+if(historyError){
 
-        ${escapeHtml(
-          shipment.Origin
-        )}
+console.error(
+"History error:",
+historyError
+);
 
-        <br>
+document.getElementById("output")
+.textContent =
+"Shipment saved, but customer update could not be recorded.";
 
+}
 
-        <strong>
-          Destination:
-        </strong>
+else{
 
-        ${escapeHtml(
-          shipment.Destination
-        )}
+document.getElementById("output")
+.textContent =
+editingId
+? "Shipment updated and customer update published!"
+: "Shipment saved and customer update published!";
 
-        <br>
+}
 
+}
 
-        <strong>
-          Status:
-        </strong>
+else{
 
-        ${escapeHtml(
-          shipment.Status
-        )}
+document.getElementById("output")
+.textContent =
+editingId
+? "Shipment updated successfully!"
+: "Shipment saved successfully!";
 
-        <br>
-
-
-        <strong>
-          Delivery:
-        </strong>
-
-        ${escapeHtml(
-          shipment.delivery
-        )}
-
-        <br><br>
+}
 
 
-        <button
-          class="edit"
-          onclick="editShipment('${shipment.id}')"
-        >
-          Edit
-        </button>
+/* CLEAR FORM */
+
+document.getElementById("editingId")
+.value="";
+
+document.getElementById("customerMessage")
+.value="";
 
 
-        <button
-          class="delete"
-          onclick="deleteShipment('${shipment.id}')"
-        >
-          Delete
-        </button>
-
-
-        <button
-          class="history-button"
-          onclick="toggleHistory('${shipment.id}', '${escapeJs(shipment.Tracking)}')"
-        >
-          View History
-        </button>
-
-
-        <div
-          id="history-${shipment.id}"
-          class="history hidden"
-        ></div>
-
-      </div>
-
-      `
-    ).join("");
+await loadShipments();
 
 }
 
 
 /* =========================
-   VIEW SHIPMENT HISTORY
+LOAD SHIPMENTS
 ========================= */
 
-async function toggleHistory(
-  id,
-  tracking
-) {
+async function loadShipments(){
 
-  const historyBox =
-    document.getElementById(
-      "history-" + id
-    );
+const list =
+document.getElementById(
+"shipmentList"
+);
 
+list.textContent =
+"Loading shipments...";
 
-  if (!historyBox) {
-    return;
-  }
+const {
+data,
+error
+} =
+await supabaseClient
+.from("shipments")
+.select(
+"id, Tracking, Origin, Destination, Status, delivery"
+)
+.order(
+"id",
+{
+ascending:false
+}
+);
 
+if(error){
 
-  /* Hide if already open */
+list.textContent =
+"Could not load shipments: " +
+error.message;
 
-  if (!historyBox.classList.contains("hidden")) {
+return;
 
-    historyBox.classList.add(
-      "hidden"
-    );
+}
 
-    historyBox.innerHTML = "";
+if(!data ||
+data.length===0){
 
-    return;
-  }
+list.textContent =
+"No shipments yet.";
 
+return;
 
-  historyBox.classList.remove(
-    "hidden"
-  );
-
-
-  historyBox.innerHTML = `
-
-    <div class="history-loading">
-      Loading shipment history...
-    </div>
-
-  `;
-
-
-  const {
-    data,
-    error
-  } =
-    await supabaseClient
-      .from("shipment_history")
-      .select(
-        "status, note, created_at"
-      )
-      .eq(
-        "tracking",
-        tracking
-      )
-      .order(
-        "created_at",
-        {
-          ascending: true
-        }
-      );
+}
 
 
-  if (error) {
+list.innerHTML =
+data.map(
+shipment => `
 
-    console.error(
-      "History error:",
-      error
-    );
+<div
+class="shipment"
+id="shipment-${shipment.id}"
+>
 
+<strong>
+Tracking:
+</strong>
 
-    historyBox.innerHTML = `
+${escapeHtml(shipment.Tracking)}
 
-      <div class="history-error">
+<br>
 
-        Unable to load shipment history.
+<strong>
+Origin:
+</strong>
 
-      </div>
+${escapeHtml(shipment.Origin)}
 
-    `;
+<br>
 
-    return;
-  }
+<strong>
+Destination:
+</strong>
 
+${escapeHtml(shipment.Destination)}
 
-  if (!data ||
-      data.length === 0) {
+<br>
 
-    historyBox.innerHTML = `
+<strong>
+Status:
+</strong>
 
-      <div class="history">
+${escapeHtml(shipment.Status)}
 
-        No shipment history recorded yet.
+<br>
 
-      </div>
+<strong>
+Delivery:
+</strong>
 
-    `;
+${escapeHtml(shipment.delivery)}
 
-    return;
-  }
-
-
-  historyBox.innerHTML = `
-
-    <div class="history-title">
-
-      Shipment History
-
-    </div>
-
-    ${
-      data.map(item => {
-
-        const date =
-          item.created_at
-            ? new Date(
-                item.created_at
-              ).toLocaleString()
-            : "";
+<br><br>
 
 
-        return `
-
-          <div class="history-item">
-
-            <div class="history-date">
-
-              ${escapeHtml(date)}
-
-            </div>
+<button
+class="edit"
+onclick="editShipment('${shipment.id}')"
+>
+Edit
+</button>
 
 
-            <div class="history-status">
-
-              ${escapeHtml(
-                item.status ||
-                "Shipment Update"
-              )}
-
-            </div>
+<button
+class="delete"
+onclick="deleteShipment('${shipment.id}')"
+>
+Delete
+</button>
 
 
-            <div class="history-note">
+<button
+class="history-button"
+onclick="toggleHistory('${shipment.id}','${escapeJs(shipment.Tracking)}')"
+>
+View History
+</button>
 
-              ${escapeHtml(
-                item.note ||
-                "Shipment status updated."
-              )}
 
-            </div>
+<div
+id="history-${shipment.id}"
+class="history hidden"
+></div>
 
-          </div>
+</div>
 
-        `;
-
-      }).join("")
-    }
-
-  `;
+`
+).join("");
 
 }
 
 
 /* =========================
-   EDIT SHIPMENT
+VIEW HISTORY
 ========================= */
 
-async function editShipment(id) {
+async function toggleHistory(id,tracking){
 
-  const {
-    data,
-    error
-  } =
-    await supabaseClient
-      .from("shipments")
-      .select(
-        "id, Tracking, Origin, Destination, Status, delivery"
-      )
-      .eq(
-        "id",
-        id
-      )
-      .single();
+const historyBox =
+document.getElementById(
+"history-"+id
+);
 
+if(!historyBox){
+return;
+}
 
-  if (error) {
+if(!historyBox.classList.contains("hidden")){
 
-    alert(
-      "Could not load shipment: " +
-      error.message
-    );
+historyBox.classList.add("hidden");
 
-    return;
-  }
+historyBox.innerHTML="";
 
+return;
 
-  document.getElementById(
-    "editingId"
-  ).value =
-    data.id;
+}
+
+historyBox.classList.remove("hidden");
+
+historyBox.innerHTML=`
+
+<div class="history-loading">
+Loading shipment history...
+</div>
+
+`;
 
 
-  document.getElementById(
-    "tracking"
-  ).value =
-    data.Tracking || "";
+const {
+data,
+error
+} =
+await supabaseClient
+.from("shipment_history")
+.select(
+"status, note, created_at"
+)
+.eq(
+"tracking",
+tracking
+)
+.order(
+"created_at",
+{
+ascending:true
+}
+);
 
 
-  document.getElementById(
-    "origin"
-  ).value =
-    data.Origin || "";
+if(error){
+
+historyBox.innerHTML=`
+
+<div class="history-error">
+Unable to load shipment history.
+</div>
+
+`;
+
+return;
+
+}
 
 
-  document.getElementById(
-    "destination"
-  ).value =
-    data.Destination || "";
+if(!data ||
+data.length===0){
+
+historyBox.innerHTML=`
+
+<div>
+No shipment history recorded yet.
+</div>
+
+`;
+
+return;
+
+}
 
 
-  document.getElementById(
-    "status"
-  ).value =
-    data.Status ||
-    "Shipment Created";
+historyBox.innerHTML=`
 
+<div class="history-title">
+Customer Updates & Shipment History
+</div>
 
-  document.getElementById(
-    "delivery"
-  ).value =
-    data.delivery || "";
+${
+data.map(item=>{
 
+const date =
+item.created_at
+? new Date(
+item.created_at
+).toLocaleString()
+:"";
 
-  document.getElementById(
-    "output"
-  ).textContent =
-    "Editing shipment " +
-    data.Tracking;
+return `
 
+<div class="history-item">
 
-  window.scrollTo({
+<div class="history-date">
+${escapeHtml(date)}
+</div>
 
-    top: 0,
+<div class="history-status">
+${escapeHtml(
+item.status ||
+"Shipment Update"
+)}
+</div>
 
-    behavior: "smooth"
+<div class="history-note">
+${escapeHtml(
+item.note ||
+"Shipment status updated."
+)}
+</div>
 
-  });
+</div>
+
+`;
+
+}).join("")
+}
+
+`;
 
 }
 
 
 /* =========================
-   DELETE SHIPMENT
+EDIT
 ========================= */
 
-async function deleteShipment(id) {
+async function editShipment(id){
 
-  const confirmed =
-    confirm(
-      "Are you sure you want to delete this shipment?"
-    );
-
-
-  if (!confirmed) {
-    return;
-  }
-
-
-  const {
-    error
-  } =
-    await supabaseClient
-      .from("shipments")
-      .delete()
-      .eq(
-        "id",
-        id
-      );
+const {
+data,
+error
+} =
+await supabaseClient
+.from("shipments")
+.select(
+"id, Tracking, Origin, Destination, Status, delivery"
+)
+.eq("id",id)
+.single();
 
 
-  if (error) {
+if(error){
 
-    alert(
-      "Could not delete shipment: " +
-      error.message
-    );
+alert(
+"Could not load shipment: " +
+error.message
+);
 
-    return;
-  }
+return;
 
-
-  document.getElementById(
-    "output"
-  ).textContent =
-    "Shipment deleted successfully!";
+}
 
 
-  await loadShipments();
+document.getElementById("editingId")
+.value=data.id;
+
+document.getElementById("tracking")
+.value=data.Tracking || "";
+
+document.getElementById("origin")
+.value=data.Origin || "";
+
+document.getElementById("destination")
+.value=data.Destination || "";
+
+document.getElementById("status")
+.value=data.Status ||
+"Shipment Created";
+
+document.getElementById("delivery")
+.value=data.delivery || "";
+
+
+/*
+Clear the customer message
+when opening an existing shipment.
+*/
+
+document.getElementById(
+"customerMessage"
+).value="";
+
+
+document.getElementById("output")
+.textContent =
+"Editing shipment " +
+data.Tracking;
+
+
+window.scrollTo({
+
+top:0,
+
+behavior:"smooth"
+
+});
 
 }
 
 
 /* =========================
-   SECURITY / DISPLAY
+DELETE
 ========================= */
 
-function escapeHtml(value) {
+async function deleteShipment(id){
 
-  if (
-    value === null ||
-    value === undefined
-  ) {
+const confirmed =
+confirm(
+"Are you sure you want to delete this shipment?"
+);
 
-    return "";
+if(!confirmed){
+return;
+}
 
-  }
+
+const {
+error
+} =
+await supabaseClient
+.from("shipments")
+.delete()
+.eq("id",id);
 
 
-  return String(value)
+if(error){
 
-    .replace(
-      /&/g,
-      "&amp;"
-    )
+alert(
+"Could not delete shipment: " +
+error.message
+);
 
-    .replace(
-      /</g,
-      "&lt;"
-    )
+return;
 
-    .replace(
-      />/g,
-      "&gt;"
-    )
+}
 
-    .replace(
-      /"/g,
-      "&quot;"
-    )
 
-    .replace(
-      /'/g,
-      "&#039;"
-    );
+document.getElementById("output")
+.textContent =
+"Shipment deleted successfully!";
+
+await loadShipments();
 
 }
 
 
 /* =========================
-   ESCAPE JAVASCRIPT
+SECURITY
 ========================= */
 
-function escapeJs(value) {
+function escapeHtml(value){
 
-  if (
-    value === null ||
-    value === undefined
-  ) {
+if(
+value===null ||
+value===undefined
+){
 
-    return "";
+return "";
 
-  }
+}
 
+return String(value)
 
-  return String(value)
+.replace(
+/&/g,
+"&amp;"
+)
 
-    .replace(
-      /\\/g,
-      "\\\\"
-    )
+.replace(
+/</g,
+"&lt;"
+)
 
-    .replace(
-      /'/g,
-      "\\'"
-    )
+.replace(
+/>/g,
+"&gt;"
+)
 
-    .replace(
-      /"/g,
-      '\\"'
-    )
+.replace(
+/"/g,
+"&quot;"
+)
 
-    .replace(
-      /\n/g,
-      "\\n"
-    )
-
-    .replace(
-      /\r/g,
-      "\\r"
-    );
+.replace(
+/'/g,
+"&#039;"
+);
 
 }
 
 
 /* =========================
-   CHECK EXISTING SESSION
+ESCAPE JS
 ========================= */
 
-async function checkSession() {
+function escapeJs(value){
 
-  const {
-    data
-  } =
-    await supabaseClient.auth.getSession();
+if(
+value===null ||
+value===undefined
+){
 
+return "";
 
-  if (data.session) {
+}
 
-    document.getElementById(
-      "loginCard"
-    )
-    .classList
-    .add("hidden");
+return String(value)
 
+.replace(
+/\\/g,
+"\\\\"
+)
 
-    document.getElementById(
-      "adminArea"
-    )
-    .classList
-    .remove("hidden");
+.replace(
+/'/g,
+"\\'"
+)
 
+.replace(
+/"/g,
+'\\"'
+)
 
-    await loadShipments();
+.replace(
+/\n/g,
+"\\n"
+)
 
-  }
+.replace(
+/\r/g,
+"\\r"
+);
 
 }
 
 
 /* =========================
-   START
+SESSION
+========================= */
+
+async function checkSession(){
+
+const {
+data
+} =
+await supabaseClient.auth
+.getSession();
+
+
+if(data.session){
+
+document.getElementById(
+"loginCard"
+)
+.classList
+.add("hidden");
+
+document.getElementById(
+"adminArea"
+)
+.classList
+.remove("hidden");
+
+await loadShipments();
+
+}
+
+}
+
+
+/* =========================
+START
 ========================= */
 
 checkSession();
